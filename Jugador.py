@@ -105,7 +105,7 @@ class Jugador(arcade.Sprite):
                 bala.center_y = jugador.center_y
                 bala.change_x = velocidad_disparo
                 bala.change_y = -velocidad_disparo
-            else:
+            else:  # -->
                 bala.left = jugador.right
                 bala.center_y = jugador.center_y
                 bala.change_x = velocidad_disparo
@@ -120,7 +120,7 @@ class Jugador(arcade.Sprite):
                 bala.center_y = jugador.center_y
                 bala.change_x = -velocidad_disparo
                 bala.change_y = velocidad_disparo
-            else:
+            else:  # <--
                 bala.right = jugador.left
                 bala.center_y = jugador.center_y
                 bala.change_x = -velocidad_disparo
@@ -130,12 +130,12 @@ class Jugador(arcade.Sprite):
                 bala.center_x = jugador.center_x
                 bala.change_x = velocidad_disparo
                 bala.change_y = velocidad_disparo
-            elif diagonal_invertida: # Arriba <--
+            elif diagonal_invertida:  # Arriba <--
                 bala.bottom = jugador.top
                 bala.center_x = jugador.center_x
                 bala.change_x = -velocidad_disparo
                 bala.change_y = velocidad_disparo
-            else:
+            else:  # Arriba
                 bala.bottom = jugador.top
                 bala.center_x = jugador.center_x
                 bala.change_y = velocidad_disparo
@@ -145,12 +145,12 @@ class Jugador(arcade.Sprite):
                 bala.center_x = jugador.center_x
                 bala.change_x = -velocidad_disparo
                 bala.change_y = -velocidad_disparo
-            elif diagonal_invertida: # Abajo -->
+            elif diagonal_invertida:  # Abajo -->
                 bala.top = jugador.bottom
                 bala.center_x = jugador.center_x
                 bala.change_x = velocidad_disparo
                 bala.change_y = -velocidad_disparo
-            else:
+            else:  # Abajo
                 bala.top = jugador.bottom
                 bala.center_x = jugador.center_x
                 bala.change_y = -velocidad_disparo
@@ -188,8 +188,8 @@ class Jugador(arcade.Sprite):
         if self.estado_fantasmal:
             self.contador_de_muerte -= 1
 
-        # Si no hemos disparado en 2s quitar la pistola
         if self.disparando:
+            # Si no hemos disparado en 2s quitar la pistola
             self.contador_remove_pistola += 1
             if self.contador_remove_pistola == 120:  # LLevamos 2s sin disparar
                 self.disparando = False
