@@ -3,6 +3,7 @@ import os
 import math
 import Main
 import Jugador
+import random
 
 
 RIGHT_FACING = 0
@@ -31,7 +32,7 @@ class Masked(arcade.Sprite):
     def __init__(self):
         """Constructor del sprite del jugador"""
         super().__init__()
-        self.character_face_direction = DOWN_FACING
+        self.character_face_direction = RIGHT_FACING
 
         self.cur_texture = 0
 
@@ -132,7 +133,7 @@ class Skeleton(arcade.Sprite):
         """Constructor del sprite del jugador"""
         super().__init__()
 
-        self.character_face_direction = UP_FACING
+        self.character_face_direction = RIGHT_FACING
 
         self.cur_texture = 0
 
@@ -147,21 +148,19 @@ class Skeleton(arcade.Sprite):
 
         self.textura_andar = []
         for i in range(11, 12):
-            texture = load_texture_4dir(f"sprites_master/ESQUELETO{i - 6}.png", f"sprites_master/ESQUELETO{i}.png",
-                                        f"sprites_master/ESQUELETO{i - 3}.png")
-            self.textura_andar.append(texture)
 
-        self.texture = self.textura_quieto[2]
+            self.textura_andar.append(load_texture_4dir(f"sprites_master/ESQUELETO{i - 6}.png", f"sprites_master/ESQUELETO{i}.png",
+                                        f"sprites_master/ESQUELETO{i - 3}.png"))
+
+        self.texture = self.textura_quieto[3]
 
         self.set_hit_box(self.texture.hit_box_points)
-
-
 
         self.lista_laser = arcade.SpriteList()
 
         self.sonido_laser = arcade.load_sound("Sonidos/Disparo pew.wav")
 
-    def follow_sprite(self, path):
+    def follow_sprite(self, player_sprite, velocidad_enemigos):
         """
         This function will move the current sprite towards whatever
         other sprite is specified as a parameter.
@@ -181,18 +180,8 @@ class Skeleton(arcade.Sprite):
             start_y = self.center_y
 
             # Get the destination location for the bullet
-            for i in range(len(path)):
-                dest_x = path[i][0]
-                if self.center_x == dest_x:
-                    continue
-
-
-
-            for i in range(len(path)):
-                dest_y = path[i][1]
-                if self.center_y == dest_y:
-                    continue
-
+            dest_x = player_sprite.center_x
+            dest_y = player_sprite.center_y
 
             # Do math to calculate how to get the bullet to the destination.
             # Calculation the angle in radians between the start points
@@ -203,28 +192,30 @@ class Skeleton(arcade.Sprite):
 
             # Taking into account the angle, calculate our change_x
             # and change_y. Velocity is how fast the bullet travels.
-            self.change_x = math.cos(angle) * COIN_SPEED
-            self.change_y = math.sin(angle) * COIN_SPEED
+            self.change_x = math.cos(angle) * velocidad_enemigos
+            self.change_y = math.sin(angle) * velocidad_enemigos
 
-    def disparar(self, skeleton, Velocidad_disparo_skeleton, jugador, lista_balas_enemigos):
+    def disparar(self, skeleton, velocidad_disparo_enemigos, jugador, lista_balas_enemigos):
         laser = arcade.Sprite("sprites_master/LASER.png")
+        self.change_y = 0
+        self.change_x = 0
 
         if self.character_face_direction == RIGHT_FACING:
             laser.left = skeleton.right
             laser.center_y = skeleton.center_y
-            laser.change_x = Velocidad_disparo_skeleton
+            laser.change_x = velocidad_disparo_enemigos
         elif self.character_face_direction == LEFT_FACING:
             laser.right = skeleton.left
             laser.center_y = skeleton.center_y
-            laser.change_x = -Velocidad_disparo_skeleton
+            laser.change_x = -velocidad_disparo_enemigos
         elif self.character_face_direction == UP_FACING:
             laser.bottom = skeleton.top
             laser.center_x = skeleton.center_x
-            laser.change_y = Velocidad_disparo_skeleton
+            laser.change_y = velocidad_disparo_enemigos
         elif self.character_face_direction == DOWN_FACING:
             laser.top = skeleton.bottom
             laser.center_x = skeleton.center_x
-            laser.change_y = -Velocidad_disparo_skeleton
+            laser.change_y = -velocidad_disparo_enemigos
 
         start_x = skeleton.center_x
         start_y = skeleton.center_y
@@ -249,8 +240,8 @@ class Skeleton(arcade.Sprite):
 
         # Taking into account the angle, calculate our change_x
         # and change_y. Velocity is how fast the bullet travels.
-        laser.change_x = math.cos(angle) * Velocidad_disparo_skeleton
-        laser.change_y = math.sin(angle) * Velocidad_disparo_skeleton
+        laser.change_x = math.cos(angle) * velocidad_disparo_enemigos
+        laser.change_y = math.sin(angle) * velocidad_disparo_enemigos
         lista_balas_enemigos.append(laser)
         return laser
 
@@ -263,13 +254,13 @@ class Skeleton(arcade.Sprite):
     def actualizar_animacion(self, delta_time: float = 1 / 60):
 
         # Saber si hay que mirar hacia la derecha, izquierda, arriba o abajo.
-        if self.change_x < 0 and self.character_face_direction == RIGHT_FACING or UP_FACING or DOWN_FACING:
+        if self.change_x < 0 and (self.character_face_direction == RIGHT_FACING or UP_FACING or DOWN_FACING):
             self.character_face_direction = LEFT_FACING
-        elif self.change_x > 0 and self.character_face_direction == LEFT_FACING or UP_FACING or DOWN_FACING:
+        elif self.change_x > 0 and (self.character_face_direction == LEFT_FACING or UP_FACING or DOWN_FACING):
             self.character_face_direction = RIGHT_FACING
-        elif self.change_y < 0 and self.character_face_direction == LEFT_FACING or RIGHT_FACING or UP_FACING:
+        elif self.change_y < 0 and (self.character_face_direction == RIGHT_FACING or LEFT_FACING or UP_FACING):
             self.character_face_direction = DOWN_FACING
-        elif self.change_y > 0 and self.character_face_direction == LEFT_FACING or RIGHT_FACING or DOWN_FACING:
+        elif self.change_y > 0 and (self.character_face_direction == RIGHT_FACING or LEFT_FACING or DOWN_FACING):
             self.character_face_direction = UP_FACING
 
         if self.change_x == 0:
@@ -316,7 +307,7 @@ class Gasmasked(arcade.Sprite):
 
         self.lista_gases = arcade.SpriteList()
 
-    def follow_sprite(self, path):
+    def follow_sprite(self, player_sprite):
         """
         This function will move the current sprite towards whatever
         other sprite is specified as a parameter.
@@ -331,23 +322,13 @@ class Gasmasked(arcade.Sprite):
 
         # Random 1 in 100 chance that we'll change from our old direction and
         # then re-aim toward the player
-        if random.randrange(1) == 0:
+        if random.randrange(100) == 0:
             start_x = self.center_x
             start_y = self.center_y
 
             # Get the destination location for the bullet
-            for i in range(len(path)):
-                dest_x = path[i][0]
-                if self.center_x == dest_x:
-                    continue
-
-
-
-            for i in range(len(path)):
-                dest_y = path[i][1]
-                if self.center_y == dest_y:
-                    continue
-
+            dest_x = player_sprite.center_x
+            dest_y = player_sprite.center_y
 
             # Do math to calculate how to get the bullet to the destination.
             # Calculation the angle in radians between the start points
@@ -361,28 +342,30 @@ class Gasmasked(arcade.Sprite):
             self.change_x = math.cos(angle) * COIN_SPEED
             self.change_y = math.sin(angle) * COIN_SPEED
 
-    def disparar(self, gasmasked, velocidad_disparo, lista_balas_enemigos):
+    def disparar(self, gasmasked, velocidad_disparo_enemigos, jugador, lista_balas_enemigos):
 
         proyectil_gaseoso = arcade.Sprite("sprites_master/GASATTACK.png")
+        self.change_y = 0
+        self.change_x = 0
         self.sonido_disparar.play()
 
         if self.character_face_direction == RIGHT_FACING:
             proyectil_gaseoso.left = gasmasked.right
             proyectil_gaseoso.center_y = gasmasked.center_y
-            proyectil_gaseoso.change_x = velocidad_disparo
+            proyectil_gaseoso.change_x = velocidad_disparo_enemigos
         elif self.character_face_direction == LEFT_FACING:
             proyectil_gaseoso.right = gasmasked.left
             proyectil_gaseoso.center_y = gasmasked.center_y
-            proyectil_gaseoso.change_x = -velocidad_disparo
+            proyectil_gaseoso.change_x = -velocidad_disparo_enemigos
         elif self.character_face_direction == UP_FACING:
             proyectil_gaseoso.bottom = gasmasked.top
             proyectil_gaseoso.center_x = gasmasked.center_x
-            proyectil_gaseoso.change_y = velocidad_disparo
+            proyectil_gaseoso.change_y = velocidad_disparo_enemigos
         elif self.character_face_direction == DOWN_FACING:
             proyectil_gaseoso.top = gasmasked.bottom
             proyectil_gaseoso.center_x = gasmasked.center_x
-            proyectil_gaseoso.change_y = -velocidad_disparo
-        self.lista_laser.append(proyectil_gaseoso)
+            proyectil_gaseoso.change_y = -velocidad_disparo_enemigos
+        #self.lista_laser.append(proyectil_gaseoso)
 
         start_x = gasmasked.center_x
         start_y = gasmasked.center_y
@@ -407,8 +390,8 @@ class Gasmasked(arcade.Sprite):
 
         # Taking into account the angle, calculate our change_x
         # and change_y. Velocity is how fast the bullet travels.
-        proyectil_gaseoso.change_x = math.cos(angle) * Velocidad_disparo_skeleton
-        proyectil_gaseoso.change_y = math.sin(angle) * Velocidad_disparo_skeleton
+        proyectil_gaseoso.change_x = math.cos(angle) * velocidad_disparo_enemigos
+        proyectil_gaseoso.change_y = math.sin(angle) * velocidad_disparo_enemigos
         lista_balas_enemigos.append(laser)
 
         return proyectil_gaseoso

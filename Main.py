@@ -9,7 +9,7 @@ import Habitaciones
 
 SCREEN_WIDTH = 900
 SCREEN_HEIGHT = 900
-Velocidad_Disparo_Enemigos = 8
+
 
 
 class PhantomGear(arcade.Window):
@@ -21,6 +21,7 @@ class PhantomGear(arcade.Window):
         # Sprite lists
         self.player_list = None
         self.bullet_list = None
+        self.lista_balas_enemigos = None
         # Habitaciones
         self.current_room = 0
         self.rooms = None
@@ -33,6 +34,9 @@ class PhantomGear(arcade.Window):
         self.carga_fantasmal_jugador = 100
         # Atributos para el disparo del jugador
         self.velocidad_disparo = 10
+        # Atributos enemigos
+        self.velocidad_enemigos = 1
+        self.velocidad_disparo_enemigos = 10
         # Atributos para el manejo del comienzo del juego
         self.empezado = False
         self.mirando_controles = False
@@ -53,6 +57,7 @@ class PhantomGear(arcade.Window):
         # Sprite lists
         self.player_list = arcade.SpriteList()
         self.bullet_list = arcade.SpriteList()
+        self.lista_balas_enemigos = arcade.SpriteList()
         # Create the player
         self.jugador = Jugador.Jugador()  # OJO!
         self.jugador.center_x = 350
@@ -96,6 +101,7 @@ class PhantomGear(arcade.Window):
                 self.rooms[self.current_room].wall_list.draw()
                 self.player_list.draw()
                 self.bullet_list.draw()
+                self.lista_balas_enemigos.draw()
                 # Mostramos mensajes relacionados con los buffs que vayamos cogiendo
                 if self.recogido_buff1:
                     HUD.mostrar_mensaje_buff(1)
@@ -224,7 +230,7 @@ class PhantomGear(arcade.Window):
                     bala.remove_from_sprite_lists()
 
             for enemigos in self.rooms[self.current_room].enemigos_list:
-                enemigos.disparar(enemigos, Velocidad_Disparo_Enemigos, self.jugador)
+                enemigos.follow_sprite(self.jugador,self.velocidad_enemigos)
 
             # Mirar si hemos cogido alguna recarga
             hit_list3 = arcade.check_for_collision_with_list(self.jugador, self.rooms[self.current_room].recargas_list)
