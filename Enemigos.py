@@ -59,6 +59,51 @@ class Masked(arcade.Sprite):
         self.vida -= damage
 
 
+    def follow_sprite(self, path):
+        """
+        This function will move the current sprite towards whatever
+        other sprite is specified as a parameter.
+
+        We use the 'min' function here to get the sprite to line up with
+        the target sprite, and not jump around if the sprite is not off
+        an exact multiple of SPRITE_SPEED.
+        """
+
+        self.center_x += self.change_x
+        self.center_y += self.change_y
+
+        # Random 1 in 100 chance that we'll change from our old direction and
+        # then re-aim toward the player
+        if random.randrange(1) == 0:
+            start_x = self.center_x
+            start_y = self.center_y
+
+            # Get the destination location for the bullet
+            for i in range(len(path)):
+                dest_x = path[i][0]
+                if self.center_x == dest_x:
+                    continue
+
+
+
+            for i in range(len(path)):
+                dest_y = path[i][1]
+                if self.center_y == dest_y:
+                    continue
+
+
+            # Do math to calculate how to get the bullet to the destination.
+            # Calculation the angle in radians between the start points
+            # and end points. This is the angle the bullet will travel.
+            x_diff = dest_x - start_x
+            y_diff = dest_y - start_y
+            angle = math.atan2(y_diff, x_diff)
+
+            # Taking into account the angle, calculate our change_x
+            # and change_y. Velocity is how fast the bullet travels.
+            self.change_x = math.cos(angle) * COIN_SPEED
+            self.change_y = math.sin(angle) * COIN_SPEED
+
     def actualizar_animacion(self, delta_time: float = 1 / 60):
 
         # Saber si hay que mirar hacia la derecha, izquierda, arriba o abajo.
@@ -91,6 +136,7 @@ class Skeleton(arcade.Sprite):
 
         self.cur_texture = 0
 
+         #self.lista_balas_enemigos = arcade.SpriteList()
         self.change_x = 0
         self.change_y = 0
 
@@ -109,13 +155,60 @@ class Skeleton(arcade.Sprite):
 
         self.set_hit_box(self.texture.hit_box_points)
 
-        self.sonido_disparar = arcade.load_sound("Sonidos/Disparo pew.wav")
+
 
         self.lista_laser = arcade.SpriteList()
 
-    def disparar(self, skeleton, Velocidad_disparo_skeleton, jugador):
+        self.sonido_laser = arcade.load_sound("Sonidos/Disparo pew.wav")
+
+    def follow_sprite(self, path):
+        """
+        This function will move the current sprite towards whatever
+        other sprite is specified as a parameter.
+
+        We use the 'min' function here to get the sprite to line up with
+        the target sprite, and not jump around if the sprite is not off
+        an exact multiple of SPRITE_SPEED.
+        """
+
+        self.center_x += self.change_x
+        self.center_y += self.change_y
+
+        # Random 1 in 100 chance that we'll change from our old direction and
+        # then re-aim toward the player
+        if random.randrange(1) == 0:
+            start_x = self.center_x
+            start_y = self.center_y
+
+            # Get the destination location for the bullet
+            for i in range(len(path)):
+                dest_x = path[i][0]
+                if self.center_x == dest_x:
+                    continue
+
+
+
+            for i in range(len(path)):
+                dest_y = path[i][1]
+                if self.center_y == dest_y:
+                    continue
+
+
+            # Do math to calculate how to get the bullet to the destination.
+            # Calculation the angle in radians between the start points
+            # and end points. This is the angle the bullet will travel.
+            x_diff = dest_x - start_x
+            y_diff = dest_y - start_y
+            angle = math.atan2(y_diff, x_diff)
+
+            # Taking into account the angle, calculate our change_x
+            # and change_y. Velocity is how fast the bullet travels.
+            self.change_x = math.cos(angle) * COIN_SPEED
+            self.change_y = math.sin(angle) * COIN_SPEED
+
+    def disparar(self, skeleton, Velocidad_disparo_skeleton, jugador, lista_balas_enemigos):
         laser = arcade.Sprite("sprites_master/LASER.png")
-        self.sonido_disparar.play()
+
         if self.character_face_direction == RIGHT_FACING:
             laser.left = skeleton.right
             laser.center_y = skeleton.center_y
@@ -146,11 +239,8 @@ class Skeleton(arcade.Sprite):
         y_diff = dest_y - start_y
         angle = math.atan2(y_diff, x_diff)
 
-        # Set the enemy to face the player.
-        skeleton.angle = math.degrees(angle) - 90
-
         # Shoot every 60 frames change of shooting each frame
-        laser = arcade.Sprite("sprites_master/LASER.png")
+
         laser.center_x = start_x
         laser.center_y = start_y
 
@@ -161,6 +251,11 @@ class Skeleton(arcade.Sprite):
         # and change_y. Velocity is how fast the bullet travels.
         laser.change_x = math.cos(angle) * Velocidad_disparo_skeleton
         laser.change_y = math.sin(angle) * Velocidad_disparo_skeleton
+        lista_balas_enemigos.append(laser)
+        return laser
+
+
+        #arcade.play_sound(self.sonido_laser)
 
     def recibir_damage(self, damage):
         self.vida -= damage
@@ -187,7 +282,7 @@ class Skeleton(arcade.Sprite):
         self.texture = self.textura_andando[self.cur_texture // UPDATES_PER_FRAME][
             self.character_face_direction]
 
-        self.lista_laser()
+
 
 
 class Gasmasked(arcade.Sprite):
@@ -221,7 +316,52 @@ class Gasmasked(arcade.Sprite):
 
         self.lista_gases = arcade.SpriteList()
 
-    def disparar(self, gasmasked, velocidad_disparo):
+    def follow_sprite(self, path):
+        """
+        This function will move the current sprite towards whatever
+        other sprite is specified as a parameter.
+
+        We use the 'min' function here to get the sprite to line up with
+        the target sprite, and not jump around if the sprite is not off
+        an exact multiple of SPRITE_SPEED.
+        """
+
+        self.center_x += self.change_x
+        self.center_y += self.change_y
+
+        # Random 1 in 100 chance that we'll change from our old direction and
+        # then re-aim toward the player
+        if random.randrange(1) == 0:
+            start_x = self.center_x
+            start_y = self.center_y
+
+            # Get the destination location for the bullet
+            for i in range(len(path)):
+                dest_x = path[i][0]
+                if self.center_x == dest_x:
+                    continue
+
+
+
+            for i in range(len(path)):
+                dest_y = path[i][1]
+                if self.center_y == dest_y:
+                    continue
+
+
+            # Do math to calculate how to get the bullet to the destination.
+            # Calculation the angle in radians between the start points
+            # and end points. This is the angle the bullet will travel.
+            x_diff = dest_x - start_x
+            y_diff = dest_y - start_y
+            angle = math.atan2(y_diff, x_diff)
+
+            # Taking into account the angle, calculate our change_x
+            # and change_y. Velocity is how fast the bullet travels.
+            self.change_x = math.cos(angle) * COIN_SPEED
+            self.change_y = math.sin(angle) * COIN_SPEED
+
+    def disparar(self, gasmasked, velocidad_disparo, lista_balas_enemigos):
 
         proyectil_gaseoso = arcade.Sprite("sprites_master/GASATTACK.png")
         self.sonido_disparar.play()
@@ -243,6 +383,36 @@ class Gasmasked(arcade.Sprite):
             proyectil_gaseoso.center_x = gasmasked.center_x
             proyectil_gaseoso.change_y = -velocidad_disparo
         self.lista_laser.append(proyectil_gaseoso)
+
+        start_x = gasmasked.center_x
+        start_y = gasmasked.center_y
+        # Get the destination location for the bullet
+        dest_x = jugador.center_x
+        dest_y = jugador.center_y
+
+        # Do math to calculate how to get the bullet to the destination.
+        # Calculation the angle in radians between the start points
+        # and end points. This is the angle the bullet will travel.
+        x_diff = dest_x - start_x
+        y_diff = dest_y - start_y
+        angle = math.atan2(y_diff, x_diff)
+
+        # Shoot every 60 frames change of shooting each frame
+
+        proyectil_gaseoso.center_x = start_x
+        proyectil_gaseoso.center_y = start_y
+
+        # Angle the bullet sprite
+        proyectil_gaseoso.angle = math.degrees(angle)
+
+        # Taking into account the angle, calculate our change_x
+        # and change_y. Velocity is how fast the bullet travels.
+        proyectil_gaseoso.change_x = math.cos(angle) * Velocidad_disparo_skeleton
+        proyectil_gaseoso.change_y = math.sin(angle) * Velocidad_disparo_skeleton
+        lista_balas_enemigos.append(laser)
+
+        return proyectil_gaseoso
+
 
     def recibir_damage(self, damage):
         self.vida -= damage
