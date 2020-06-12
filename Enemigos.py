@@ -38,7 +38,7 @@ class Masked(arcade.Sprite):
 
         self.vida = 2
 
-        self.jugador = Jugador()  # OJO!
+
 
         self.change_x = 0
         self.change_y = 0
@@ -60,7 +60,7 @@ class Masked(arcade.Sprite):
         self.vida -= damage
 
 
-    def follow_sprite(self, path):
+    def follow_sprite(self, player_sprite, velocidad_enemigos):
         """
         This function will move the current sprite towards whatever
         other sprite is specified as a parameter.
@@ -80,18 +80,8 @@ class Masked(arcade.Sprite):
             start_y = self.center_y
 
             # Get the destination location for the bullet
-            for i in range(len(path)):
-                dest_x = path[i][0]
-                if self.center_x == dest_x:
-                    continue
-
-
-
-            for i in range(len(path)):
-                dest_y = path[i][1]
-                if self.center_y == dest_y:
-                    continue
-
+            dest_x = player_sprite.center_x
+            dest_y = player_sprite.center_y
 
             # Do math to calculate how to get the bullet to the destination.
             # Calculation the angle in radians between the start points
@@ -102,8 +92,8 @@ class Masked(arcade.Sprite):
 
             # Taking into account the angle, calculate our change_x
             # and change_y. Velocity is how fast the bullet travels.
-            self.change_x = math.cos(angle) * COIN_SPEED
-            self.change_y = math.sin(angle) * COIN_SPEED
+            self.change_x = math.cos(angle) * velocidad_enemigos
+            self.change_y = math.sin(angle) * velocidad_enemigos
 
     def actualizar_animacion(self, delta_time: float = 1 / 60):
 
@@ -307,7 +297,7 @@ class Gasmasked(arcade.Sprite):
 
         self.lista_gases = arcade.SpriteList()
 
-    def follow_sprite(self, player_sprite):
+    def follow_sprite(self, player_sprite, velocidad_enemigos):
         """
         This function will move the current sprite towards whatever
         other sprite is specified as a parameter.
@@ -322,7 +312,7 @@ class Gasmasked(arcade.Sprite):
 
         # Random 1 in 100 chance that we'll change from our old direction and
         # then re-aim toward the player
-        if random.randrange(100) == 0:
+        if random.randrange(1) == 0:
             start_x = self.center_x
             start_y = self.center_y
 
@@ -339,9 +329,8 @@ class Gasmasked(arcade.Sprite):
 
             # Taking into account the angle, calculate our change_x
             # and change_y. Velocity is how fast the bullet travels.
-            self.change_x = math.cos(angle) * COIN_SPEED
-            self.change_y = math.sin(angle) * COIN_SPEED
-
+            self.change_x = math.cos(angle) * velocidad_enemigos
+            self.change_y = math.sin(angle) * velocidad_enemigos
     def disparar(self, gasmasked, velocidad_disparo_enemigos, jugador, lista_balas_enemigos):
 
         proyectil_gaseoso = arcade.Sprite("sprites_master/GASATTACK.png")
