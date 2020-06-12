@@ -11,7 +11,6 @@ SCREEN_WIDTH = 900
 SCREEN_HEIGHT = 900
 
 
-
 class PhantomGear(arcade.Window):
     """ Ventana principal del juego """
 
@@ -42,6 +41,12 @@ class PhantomGear(arcade.Window):
         self.mirando_controles = False
         # Pausar el juego
         self.pausado = False
+        # Musica de fondo
+        self.musica_lab = arcade.load_sound("Sonidos" + os.path.sep + "Piso Final.wav")
+        self.musica_ruinas = arcade.load_sound("Sonidos" + os.path.sep + "piso2.wav")
+        self.musica_prision_activa = False
+        self.musica_ruinas_activa = False
+        self.musica_lab_activa = False
         # Atributos para manejar el mostrar mensajes dependiendo del buff y administrar los buffs en sí
         self.contador_quitar_mensaje = 0
         self.buffs_activos = []
@@ -76,10 +81,16 @@ class PhantomGear(arcade.Window):
         self.carga_fantasmal_jugador = 100
         self.contador_quitar_mensaje = 600  # 10s
 
+        # Musica reset
+        self.musica_prision_activa = False
+        self.musica_ruinas_activa = False
+        self.musica_lab_activa = False
+
         # Rooms
         self.cambiado = False
         self.rooms = Habitaciones.setup_habs()  # lista de todas las habitaciones
         self.current_room = 0  # habitacion inicial (cambiar a 0)/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+
         # Fisicas para la habitacion en la que estemos
         self.physics_engine = arcade.PhysicsEngineSimple(self.jugador, self.rooms[self.current_room].wall_list)
 
@@ -188,12 +199,23 @@ class PhantomGear(arcade.Window):
                     return
 
             # Mirar en que habitación estamos y si necesitamos cambiar a otra
-            self.current_room, self.jugador.center_x, self.jugador.center_y, self.cambiado = \
-                Habitaciones.check_cambio_habitacion(self.current_room, self.jugador.center_x, self.jugador.center_y)
-            if self.cambiado:
-                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
-                                                                 self.rooms[self.current_room].wall_list)
-                self.bullet_list = arcade.SpriteList()
+            if len(self.rooms[self.current_room].enemigos_list) == 0:
+                self.current_room, self.jugador.center_x, self.jugador.center_y, self.cambiado = \
+                    Habitaciones.check_cambio_habitacion(self.current_room, self.jugador.center_x,
+                                                         self.jugador.center_y)
+                if self.cambiado:
+                    self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                     self.rooms[self.current_room].wall_list)
+                    self.bullet_list = arcade.SpriteList()
+            else:
+                if self.jugador.center_x < 50:
+                    self.jugador.center_x = 60
+                elif self.jugador.center_x > 850:
+                    self.jugador.center_x = 840
+                elif self.jugador.center_y > 850:
+                    self.jugador.center_y = 840
+                elif self.jugador.center_y < 50:
+                    self.jugador.center_y = 60
 
             # Actualizar balas jugador
             # Loop through each bullet
@@ -232,7 +254,7 @@ class PhantomGear(arcade.Window):
 
             for enemigos in self.rooms[self.current_room].enemigos_list:
                 enemigos.update_animation()
-                enemigos.follow_sprite(self.jugador,self.velocidad_enemigos)
+                enemigos.follow_sprite(self.jugador, self.velocidad_enemigos)
                 enemigos.atacar(enemigos, self.velocidad_disparo_enemigos, self.jugador, self.lista_balas_enemigos)
 
             # Mirar si hemos cogido alguna recarga
@@ -263,6 +285,15 @@ class PhantomGear(arcade.Window):
                         if self.current_room == 67:  # hemos cogido el buff de daño doble
                             self.recogido_buff5 = True
                             self.buffs_activos[4] = True
+            # Actualizar la música de fondo
+            if self.current_room <= 6 and not self.musica_prision_activa:
+                self.musica_prision_activa = True
+            elif 7 <= self.current_room <= 21 and not self.musica_ruinas_activa:
+                arcade.play_sound(self.musica_ruinas)
+                self.musica_ruinas_activa = True
+            elif 22 <= self.current_room <= 67 and not self.musica_lab_activa:
+                arcade.play_sound(self.musica_lab)
+                self.musica_lab_activa = True
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
