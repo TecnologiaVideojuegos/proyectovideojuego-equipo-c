@@ -50,9 +50,10 @@ def dibujar_contador_de_muerte(contador):
 
 
 def dibujar_pantalla_de_inicio():
-    arcade.draw_lrtb_rectangle_filled(0, 900, 900, 0, arcade.color.BLACK)
-    arcade.draw_text("Pulsa enter para comenzar", 0, 450, arcade.color.WOOD_BROWN, 40, 900, "center", bold=True)
-    arcade.draw_text("Pulsa 'C' para ver los controles", 0, 350, arcade.color.WOOD_BROWN, 30, 900, "center")
+    arcade.draw_texture_rectangle(450, 450, 900, 900,
+                                  arcade.load_texture("sprites_master" + os.path.sep + "PANTALLAINICIO.jpg"))
+    arcade.draw_text("Pulsa enter para comenzar", -50, 450, arcade.color.GUPPIE_GREEN, 20, 450, "center", bold=True)
+    arcade.draw_text("Pulsa 'C' para ver los controles", 500, 450, arcade.color.GUPPIE_GREEN, 20, 450, "center")
 
 
 def dibujar_controles():
@@ -117,7 +118,7 @@ def dibujar_hud_gameover():
 
 
 def mostrar_mensaje_buff(n):
-    arcade.draw_lrtb_rectangle_filled(300, 775, 875, 825, arcade.color.DARK_SEA_GREEN)
+    arcade.draw_lrtb_rectangle_filled(300, 800, 875, 825, arcade.color.DARK_SEA_GREEN)
     if n == 1:
         # Buff inicial para habilitar el modo fantasmal
         arcade.draw_text("Ahora ya puedes habilitar el modo fantasamal!", 300, 850,

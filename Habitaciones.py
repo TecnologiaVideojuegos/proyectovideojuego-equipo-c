@@ -47,6 +47,14 @@ def setup_room_p1():
     esqueleto1.center_y = 300
     esqueleto1.center_x = 700
     room.enemigos_list.append(esqueleto1)
+    masked1 = Enemigos.Masked()
+    masked1.center_y = 250
+    masked1.center_x = 600
+    room.enemigos_list.append(masked1)
+    gasmasked1 = Enemigos.Gasmasked()
+    gasmasked1.center_y = 200
+    gasmasked1.center_x = 600
+    room.enemigos_list.append(gasmasked1)
 
     # Definir muros
     room.wall_list = obstaculos
