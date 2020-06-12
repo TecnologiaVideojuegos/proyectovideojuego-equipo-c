@@ -36,7 +36,7 @@ class PhantomGear(arcade.Window):
         self.velocidad_disparo = 10
         # Atributos enemigos
         self.velocidad_enemigos = 1
-        self.velocidad_disparo_enemigos = 10
+        self.velocidad_disparo_enemigos = 5
         # Atributos para el manejo del comienzo del juego
         self.empezado = False
         self.mirando_controles = False
@@ -158,6 +158,7 @@ class PhantomGear(arcade.Window):
             self.physics_engine.update()
             self.jugador.update_animation()
             self.bullet_list.update()
+            self.lista_balas_enemigos.update()
 
             # Si estamos en modo fantasmal y matamos a todos los enemigos de la sala
             # --> reset de modo fantasmal (quitar buffs y demás)
@@ -230,7 +231,9 @@ class PhantomGear(arcade.Window):
                     bala.remove_from_sprite_lists()
 
             for enemigos in self.rooms[self.current_room].enemigos_list:
+                enemigos.update_animation()
                 enemigos.follow_sprite(self.jugador,self.velocidad_enemigos)
+                enemigos.atacar(enemigos, self.velocidad_disparo_enemigos, self.jugador, self.lista_balas_enemigos)
 
             # Mirar si hemos cogido alguna recarga
             hit_list3 = arcade.check_for_collision_with_list(self.jugador, self.rooms[self.current_room].recargas_list)

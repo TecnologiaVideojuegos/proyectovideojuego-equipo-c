@@ -47,7 +47,7 @@ def setup_room_p1():
     esqueleto1.center_y = 300
     esqueleto1.center_x = 700
     room.enemigos_list.append(esqueleto1)
-    masked1= Enemigos.Masked()
+    masked1 = Enemigos.Masked()
     masked1.center_y = 250
     masked1.center_x = 600
     room.enemigos_list.append(masked1)
