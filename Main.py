@@ -20,7 +20,8 @@ class PhantomGear(arcade.Window):
         # Sprite lists
         self.player_list = None
         self.bullet_list = None
-        self.lista_balas_enemigos = None
+        self.lista_balas_laser = None
+        self.lista_balas_gas = None
         # Habitaciones
         self.current_room = 0
         self.rooms = None
@@ -29,13 +30,14 @@ class PhantomGear(arcade.Window):
         # Set up the player
         self.jugador = None
         self.physics_engine = None
+        self.physics_engine_enemigos = None
         self.velocidad_jugador = 4
         self.vida_jugador = 10
         self.carga_fantasmal_jugador = 100
         # Atributos para el disparo del jugador
         self.velocidad_disparo = 10
         # Atributos enemigos
-        self.velocidad_enemigos = 1
+        self.velocidad_enemigos = 1.2
         self.velocidad_disparo_enemigos = 5
         # Atributos para el manejo del comienzo del juego
         self.empezado = False
@@ -65,7 +67,8 @@ class PhantomGear(arcade.Window):
         # Sprite lists
         self.player_list = arcade.SpriteList()
         self.bullet_list = arcade.SpriteList()
-        self.lista_balas_enemigos = arcade.SpriteList()
+        self.lista_balas_laser = arcade.SpriteList()
+        self.lista_balas_gas = arcade.SpriteList()
         # Create the player
         self.jugador = Jugador.Jugador()  # OJO!
         self.jugador.center_x = 350
@@ -96,6 +99,8 @@ class PhantomGear(arcade.Window):
 
         # Fisicas para la habitacion en la que estemos
         self.physics_engine = arcade.PhysicsEngineSimple(self.jugador, self.rooms[self.current_room].wall_list)
+        for enemigos in self.rooms[self.current_room].enemigos_list:
+            self.physics_engine_enemigos = arcade.PhysicsEngineSimple(enemigos, self.rooms[self.current_room].wall_list)
 
     def on_draw(self):
         arcade.start_render()
@@ -115,7 +120,8 @@ class PhantomGear(arcade.Window):
                 self.rooms[self.current_room].wall_list.draw()
                 self.player_list.draw()
                 self.bullet_list.draw()
-                self.lista_balas_enemigos.draw()
+                self.lista_balas_laser.draw()
+                self.lista_balas_gas.draw()
                 # Mostramos mensajes relacionados con los buffs que vayamos cogiendo
                 if self.recogido_buff1:
                     HUD.mostrar_mensaje_buff(1)
@@ -170,9 +176,12 @@ class PhantomGear(arcade.Window):
         if not self.pausado or self.jugador.muerto:
             # Actualizar todos los sprites
             self.physics_engine.update()
+            if len(self.rooms[self.current_room].enemigos_list) > 0:
+                self.physics_engine_enemigos.update()
             self.jugador.update_animation()
             self.bullet_list.update()
-            self.lista_balas_enemigos.update()
+            self.lista_balas_laser.update()
+            self.lista_balas_gas.update()
 
             # Si estamos en modo fantasmal y matamos a todos los enemigos de la sala
             # --> reset de modo fantasmal (quitar buffs y demás)
@@ -209,9 +218,14 @@ class PhantomGear(arcade.Window):
                 if self.cambiado:
                     self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
                                                                      self.rooms[self.current_room].wall_list)
+                    for enemigos in self.rooms[self.current_room].enemigos_list:
+                        self.physics_engine_enemigos = arcade.PhysicsEngineSimple(enemigos, self.rooms[
+                            self.current_room].wall_list)
                     self.bullet_list = arcade.SpriteList()
                     if self.cambiado_piso:
                         self.sonido_cambio_piso.play()
+                    self.lista_balas_laser = arcade.SpriteList()
+                    self.lista_balas_gas = arcade.SpriteList()
             else:
                 # Límites para que el jugador no salga de la habitación mientras haya enemigos
                 if self.jugador.center_x < 125:
@@ -262,11 +276,37 @@ class PhantomGear(arcade.Window):
                                 enemigo.remove_from_sprite_lists()
 
                     bala.remove_from_sprite_lists()
+            for laser in self.lista_balas_laser:
+                hit_list = arcade.check_for_collision_with_list(laser, self.rooms[self.current_room].wall_list)
+                if len(hit_list) > 0:
+                    laser.remove_from_sprite_lists()
+                hit_list2 = arcade.check_for_collision_with_list(laser,self.player_list)
+                if len(hit_list2) > 0:
+                    laser.remove_from_sprite_lists()
+                    self.vida_jugador -=2
+
+            for gas in self.lista_balas_gas:
+                hit_list = arcade.check_for_collision_with_list(gas, self.rooms[self.current_room].wall_list)
+                if len(hit_list) > 0:
+                    gas.remove_from_sprite_lists()
+                hit_list2 = arcade.check_for_collision_with_list(gas, self.player_list)
+                if len(hit_list2) > 0:
+                    gas.remove_from_sprite_lists()
+                    self.vida_jugador -=2
+
+            hit_list_enemigos = arcade.check_for_collision_with_list(self.jugador,
+                                                                     self.rooms[self.current_room].enemigos_list)
+
+            if len(hit_list_enemigos) > 0:
+
+                    self.vida_jugador -= 0.25
 
             for enemigos in self.rooms[self.current_room].enemigos_list:
                 enemigos.update_animation()
                 enemigos.follow_sprite(self.jugador, self.velocidad_enemigos)
-                enemigos.atacar(enemigos, self.velocidad_disparo_enemigos, self.jugador, self.lista_balas_enemigos)
+                enemigos.atacar(enemigos, self.velocidad_disparo_enemigos, self.jugador, self.lista_balas_laser, self.lista_balas_gas)
+
+
 
             # Mirar si hemos cogido alguna recarga
             hit_list3 = arcade.check_for_collision_with_list(self.jugador, self.rooms[self.current_room].recargas_list)
