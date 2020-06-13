@@ -88,7 +88,7 @@ class Masked(arcade.Sprite):
             self.change_x = math.cos(angle) * velocidad_enemigos
             self.change_y = math.sin(angle) * velocidad_enemigos
 
-    def atacar(self, skeleton, velocidad_disparo_enemigos, jugador, lista_balas_enemigos):
+    def atacar(self, skeleton, velocidad_disparo_enemigos, jugador, lista_balas_laser, lista_balas_gas):
         pass
 
     def update_animation(self, delta_time: float = 1 / 60):
@@ -175,10 +175,10 @@ class Skeleton(arcade.Sprite):
             self.change_x = math.cos(angle) * velocidad_enemigos
             self.change_y = math.sin(angle) * velocidad_enemigos
 
-    def atacar(self, skeleton, velocidad_disparo_enemigos, jugador, lista_balas_enemigos):
+    def atacar(self, skeleton, velocidad_disparo_enemigos, jugador, lista_balas_laser, lista_balas_gas):
         self.change_y = 0
         self.change_x = 0
-        if random.randrange(40) == 1:
+        if random.randrange(70) == 1:
             laser = arcade.Sprite("sprites_master/LASER.png")
 
 
@@ -224,7 +224,7 @@ class Skeleton(arcade.Sprite):
             # and change_y. Velocity is how fast the bullet travels.
             laser.change_x = math.cos(angle) * velocidad_disparo_enemigos
             laser.change_y = math.sin(angle) * velocidad_disparo_enemigos
-            lista_balas_enemigos.append(laser)
+            lista_balas_laser.append(laser)
             return laser
 
     def recibir_damage(self, damage):
@@ -293,7 +293,7 @@ class Gasmasked(arcade.Sprite):
 
         # Random 1 in 100 chance that we'll change from our old direction and
         # then re-aim toward the player
-        if random.randrange(40) == 1:
+        if random.randrange(70) == 1:
             start_x = self.center_x
             start_y = self.center_y
 
@@ -313,7 +313,7 @@ class Gasmasked(arcade.Sprite):
             self.change_x = math.cos(angle) * velocidad_enemigos
             self.change_y = math.sin(angle) * velocidad_enemigos
 
-    def atacar(self, gasmasked, velocidad_disparo_enemigos, jugador, lista_balas_enemigos):
+    def atacar(self, gasmasked, velocidad_disparo_enemigos, jugador, lista_balas_laser, lista_balas_gas):
         self.change_y = 0
         self.change_x = 0
         if random.randrange(20) == 1:
@@ -363,7 +363,7 @@ class Gasmasked(arcade.Sprite):
             # and change_y. Velocity is how fast the bullet travels.
             proyectil_gaseoso.change_x = math.cos(angle) * velocidad_disparo_enemigos
             proyectil_gaseoso.change_y = math.sin(angle) * velocidad_disparo_enemigos
-            lista_balas_enemigos.append(proyectil_gaseoso)
+            lista_balas_gas.append(proyectil_gaseoso)
 
             return proyectil_gaseoso
 
