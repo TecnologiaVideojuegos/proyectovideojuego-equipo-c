@@ -25,6 +25,7 @@ class PhantomGear(arcade.Window):
         self.current_room = 0
         self.rooms = None
         self.cambiado = False
+        self.cambiado_piso = False
         # Set up the player
         self.jugador = None
         self.physics_engine = None
@@ -47,6 +48,8 @@ class PhantomGear(arcade.Window):
         self.musica_prision_activa = False
         self.musica_ruinas_activa = False
         self.musica_lab_activa = False
+        # Otros sonidos
+        self.sonido_cambio_piso = arcade.load_sound("Sonidos"+os.path.sep+"cambio de lvl(provisional).wav")
         # Atributos para manejar el mostrar mensajes dependiendo del buff y administrar los buffs en sí
         self.contador_quitar_mensaje = 0
         self.buffs_activos = []
@@ -200,22 +203,30 @@ class PhantomGear(arcade.Window):
 
             # Mirar en que habitación estamos y si necesitamos cambiar a otra
             if len(self.rooms[self.current_room].enemigos_list) == 0:
-                self.current_room, self.jugador.center_x, self.jugador.center_y, self.cambiado = \
+                self.current_room, self.jugador.center_x, self.jugador.center_y, self.cambiado, self.cambiado_piso = \
                     Habitaciones.check_cambio_habitacion(self.current_room, self.jugador.center_x,
                                                          self.jugador.center_y)
                 if self.cambiado:
                     self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
                                                                      self.rooms[self.current_room].wall_list)
                     self.bullet_list = arcade.SpriteList()
+                    if self.cambiado_piso:
+                        self.sonido_cambio_piso.play()
             else:
-                if self.jugador.center_x < 50:
-                    self.jugador.center_x = 60
-                elif self.jugador.center_x > 850:
-                    self.jugador.center_x = 840
-                elif self.jugador.center_y > 850:
-                    self.jugador.center_y = 840
-                elif self.jugador.center_y < 50:
-                    self.jugador.center_y = 60
+                # Límites para que el jugador no salga de la habitación mientras haya enemigos
+                if self.jugador.center_x < 125:
+                    self.jugador.center_x = 135
+                elif self.jugador.center_x > 775:
+                    self.jugador.center_x = 765
+                elif self.jugador.center_y > 775:
+                    self.jugador.center_y = 765
+                elif self.jugador.center_y < 125:
+                    self.jugador.center_y = 135
+
+            # Limites para cuando el jugador cambia de piso o va a la sala del boss
+            if self.current_room == 7 or self.current_room == 22 or self.current_room == 68:
+                if self.jugador.center_y < 125:
+                    self.jugador.center_y = 135
 
             # Actualizar balas jugador
             # Loop through each bullet

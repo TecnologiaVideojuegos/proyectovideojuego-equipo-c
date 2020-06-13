@@ -43,19 +43,6 @@ def setup_room_p1():
     buff.center_y = 450
     room.buffs_list.append(buff)
 
-    esqueleto1 = Enemigos.Skeleton()
-    esqueleto1.center_y = 300
-    esqueleto1.center_x = 700
-    room.enemigos_list.append(esqueleto1)
-    masked1 = Enemigos.Masked()
-    masked1.center_y = 250
-    masked1.center_x = 600
-    room.enemigos_list.append(masked1)
-    gasmasked1 = Enemigos.Gasmasked()
-    gasmasked1.center_y = 200
-    gasmasked1.center_x = 600
-    room.enemigos_list.append(gasmasked1)
-
     # Definir muros
     room.wall_list = obstaculos
     return room
@@ -70,6 +57,12 @@ def setup_room_p2():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+
+    # Enemigos
+    masked= Enemigos.Masked()
+    masked.center_y = 450
+    masked.center_x = 800
+    room.enemigos_list.append(masked)
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "PRISION2.tmx")
@@ -92,6 +85,11 @@ def setup_room_p3():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 450
+    esqueleto.center_x = 750
+    room.enemigos_list.append(esqueleto)
+
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "PRISION9.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "CAJAS Y ROCAS")  # OJO!
@@ -112,6 +110,15 @@ def setup_room_p4():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+
+    masked = Enemigos.Masked()
+    masked.center_y = 750
+    masked.center_x = 150
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 750
+    masked.center_x = 750
+    room.enemigos_list.append(masked)
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "PRISION4.tmx")
@@ -134,6 +141,15 @@ def setup_room_p5():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 300
+    esqueleto.center_x = 450
+    room.enemigos_list.append(esqueleto)
+    masked = Enemigos.Masked()
+    masked.center_y = 150
+    masked.center_x = 450
+    room.enemigos_list.append(masked)
+
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "PRISION8.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "CAJAS Y ROCAS")  # OJO!
@@ -154,6 +170,15 @@ def setup_room_p6():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 300
+    esqueleto.center_x = 750
+    room.enemigos_list.append(esqueleto)
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 600
+    esqueleto.center_x = 750
+    room.enemigos_list.append(esqueleto)
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "PRISION7.tmx")
@@ -226,6 +251,15 @@ def setup_room_r2():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 700
+    esqueleto.center_x = 450
+    room.enemigos_list.append(esqueleto)
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 600
+    esqueleto.center_x = 450
+    room.enemigos_list.append(esqueleto)
+
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS1.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "CAJAS Y ROCAS")  # OJO!
@@ -246,6 +280,11 @@ def setup_room_r3():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+
+    masked = Enemigos.Masked()
+    masked.center_y = 650
+    masked.center_x = 450
+    room.enemigos_list.append(masked)
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS9.tmx")
@@ -268,6 +307,19 @@ def setup_room_r4():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
+    masked = Enemigos.Masked()
+    masked.center_y = 725
+    masked.center_x = 750
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 450
+    masked.center_x = 750
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 200
+    masked.center_x = 750
+    room.enemigos_list.append(masked)
+
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS15.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "CAJAS Y ROCAS")  # OJO!
@@ -288,6 +340,19 @@ def setup_room_r5():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 725
+    esqueleto.center_x = 200
+    room.enemigos_list.append(esqueleto)
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 725
+    esqueleto.center_x = 450
+    room.enemigos_list.append(esqueleto)
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 725
+    esqueleto.center_x = 700
+    room.enemigos_list.append(esqueleto)
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS1.tmx")
@@ -310,6 +375,11 @@ def setup_room_r6():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 450
+    esqueleto.center_x = 450
+    room.enemigos_list.append(esqueleto)
+
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS12.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "ROCAS Y CAJAS")  # OJO!
@@ -330,6 +400,11 @@ def setup_room_r7():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+
+    gasmasked = Enemigos.Gasmasked()
+    gasmasked.center_y = 450
+    gasmasked.center_x = 750
+    room.enemigos_list.append(gasmasked)
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS2.tmx")
@@ -381,6 +456,15 @@ def setup_room_r9():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 725
+    esqueleto.center_x = 750
+    room.enemigos_list.append(esqueleto)
+    masked = Enemigos.Masked()
+    masked.center_y = 200
+    masked.center_x = 150
+    room.enemigos_list.append(masked)
+
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS14.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "ROCAS Y CAJAS")  # OJO!
@@ -423,6 +507,15 @@ def setup_room_r11():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 725
+    esqueleto.center_x = 200
+    room.enemigos_list.append(esqueleto)
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 200
+    esqueleto.center_x = 200
+    room.enemigos_list.append(esqueleto)
+
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS2.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "CAJAS Y ROCAS")  # OJO!
@@ -444,6 +537,19 @@ def setup_room_r12():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
+    masked = Enemigos.Masked()
+    masked.center_y = 450
+    masked.center_x = 150
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 200
+    masked.center_x = 300
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 725
+    masked.center_x = 300
+    room.enemigos_list.append(masked)
+
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS9.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "ROCAS Y CAJAS")  # OJO!
@@ -464,6 +570,11 @@ def setup_room_r13():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+
+    masked = Enemigos.Masked()
+    masked.center_y = 200
+    masked.center_x = 650
+    room.enemigos_list.append(masked)
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS5.tmx")
@@ -514,6 +625,11 @@ def setup_room_r15():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 700
+    esqueleto.center_x = 450
+    room.enemigos_list.append(esqueleto)
+
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS4.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "CAJAS Y ROCAS")  # OJO!
@@ -556,6 +672,15 @@ def setup_room_l2():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
+    masked = Enemigos.Masked()
+    masked.center_y = 700
+    masked.center_x = 450
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 600
+    masked.center_x = 450
+    room.enemigos_list.append(masked)
+
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB6.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "OBJETOS")  # OJO!
@@ -576,6 +701,19 @@ def setup_room_l3():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+
+    masked = Enemigos.Masked()
+    masked.center_y = 750
+    masked.center_x = 700
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 700
+    masked.center_x = 750
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 650
+    masked.center_x = 750
+    room.enemigos_list.append(masked)
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB6M.tmx")
@@ -598,6 +736,23 @@ def setup_room_l4():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
+    masked = Enemigos.Masked()
+    masked.center_y = 450
+    masked.center_x = 150
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 450
+    masked.center_x = 750
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 700
+    masked.center_x = 300
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 700
+    masked.center_x = 600
+    room.enemigos_list.append(masked)
+
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB14M.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "OBJETOS")  # OJO!
@@ -618,6 +773,19 @@ def setup_room_l5():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 700
+    esqueleto.center_x = 750
+    room.enemigos_list.append(esqueleto)
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 450
+    esqueleto.center_x = 750
+    room.enemigos_list.append(esqueleto)
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 200
+    esqueleto.center_x = 750
+    room.enemigos_list.append(esqueleto)
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB5M.tmx")
@@ -661,6 +829,11 @@ def setup_room_l7():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
+    gasmasked = Enemigos.Gasmasked()
+    gasmasked.center_y = 450
+    gasmasked.center_x = 650
+    room.enemigos_list.append(gasmasked)
+
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB9.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "OBJETOS")  # OJO!
@@ -681,6 +854,19 @@ def setup_room_l8():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 200
+    esqueleto.center_x = 150
+    room.enemigos_list.append(esqueleto)
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 700
+    esqueleto.center_x = 150
+    room.enemigos_list.append(esqueleto)
+    masked = Enemigos.Masked()
+    masked.center_y = 450
+    masked.center_x = 750
+    room.enemigos_list.append(masked)
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB5.tmx")
@@ -703,6 +889,19 @@ def setup_room_l9():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
+    masked = Enemigos.Masked()
+    masked.center_y = 700
+    masked.center_x = 550
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 150
+    masked.center_x = 550
+    room.enemigos_list.append(masked)
+    gasmasked = Enemigos.Gasmasked()
+    gasmasked.center_y = 450
+    gasmasked.center_x = 750
+    room.enemigos_list.append(gasmasked)
+
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB5M.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "OBJETOS")  # OJO!
@@ -723,6 +922,15 @@ def setup_room_l10():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 450
+    esqueleto.center_x = 150
+    room.enemigos_list.append(esqueleto)
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 450
+    esqueleto.center_x = 750
+    room.enemigos_list.append(esqueleto)
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB6.tmx")
@@ -745,6 +953,11 @@ def setup_room_l11():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 450
+    esqueleto.center_x = 250
+    room.enemigos_list.append(esqueleto)
+
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB6M.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "OBJETOS")  # OJO!
@@ -765,6 +978,19 @@ def setup_room_l12():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+
+    masked = Enemigos.Masked()
+    masked.center_y = 700
+    masked.center_x = 250
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 700
+    masked.center_x = 650
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 200
+    masked.center_x = 450
+    room.enemigos_list.append(masked)
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB12M.tmx")
@@ -808,6 +1034,15 @@ def setup_room_l14():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
+    masked = Enemigos.Masked()
+    masked.center_y = 650
+    masked.center_x = 750
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 250
+    masked.center_x = 750
+    room.enemigos_list.append(masked)
+
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB5.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "OBJETOS")  # OJO!
@@ -828,6 +1063,11 @@ def setup_room_l15():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+
+    masked = Enemigos.Masked()
+    masked.center_y = 450
+    masked.center_x = 450
+    room.enemigos_list.append(masked)
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB6.tmx")
@@ -850,6 +1090,11 @@ def setup_room_l16():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
+    gasmasked = Enemigos.Gasmasked()
+    gasmasked.center_y = 550
+    gasmasked.center_x = 450
+    room.enemigos_list.append(gasmasked)
+
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB10M.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "OBJETOS")  # OJO!
@@ -870,6 +1115,11 @@ def setup_room_l17():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 450
+    esqueleto.center_x = 350
+    room.enemigos_list.append(esqueleto)
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB13.tmx")
@@ -913,6 +1163,31 @@ def setup_room_l19():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
+    masked = Enemigos.Masked()
+    masked.center_y = 300
+    masked.center_x = 150
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 250
+    masked.center_x = 300
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 200
+    masked.center_x = 400
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 300
+    masked.center_x = 500
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 225
+    masked.center_x = 750
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 350
+    masked.center_x = 750
+    room.enemigos_list.append(masked)
+
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB12M.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "OBJETOS")  # OJO!
@@ -955,6 +1230,23 @@ def setup_room_l21():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 200
+    esqueleto.center_x = 300
+    room.enemigos_list.append(esqueleto)
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 200
+    esqueleto.center_x = 650
+    room.enemigos_list.append(esqueleto)
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 600
+    esqueleto.center_x = 150
+    room.enemigos_list.append(esqueleto)
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 600
+    esqueleto.center_x = 750
+    room.enemigos_list.append(esqueleto)
+
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB11M.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "OBJETOS")  # OJO!
@@ -975,6 +1267,15 @@ def setup_room_l22():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+
+    masked = Enemigos.Masked()
+    masked.center_y = 450
+    masked.center_x = 300
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 450
+    masked.center_x = 600
+    room.enemigos_list.append(masked)
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB6M.tmx")
@@ -997,6 +1298,11 @@ def setup_room_l23():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 450
+    esqueleto.center_x = 350
+    room.enemigos_list.append(esqueleto)
+
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB9M.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "OBJETOS")  # OJO!
@@ -1017,6 +1323,19 @@ def setup_room_l24():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 200
+    esqueleto.center_x = 450
+    room.enemigos_list.append(esqueleto)
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 700
+    esqueleto.center_x = 450
+    room.enemigos_list.append(esqueleto)
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 450
+    esqueleto.center_x = 150
+    room.enemigos_list.append(esqueleto)
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB5M.tmx")
@@ -1060,6 +1379,15 @@ def setup_room_l26():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 450
+    esqueleto.center_x = 500
+    room.enemigos_list.append(esqueleto)
+    masked = Enemigos.Masked()
+    masked.center_y = 300
+    masked.center_x = 750
+    room.enemigos_list.append(masked)
+
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB7M.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "OBJETOS")  # OJO!
@@ -1080,6 +1408,15 @@ def setup_room_l27():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 650
+    esqueleto.center_x = 150
+    room.enemigos_list.append(esqueleto)
+    masked = Enemigos.Masked()
+    masked.center_y = 350
+    masked.center_x = 450
+    room.enemigos_list.append(masked)
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB14M.tmx")
@@ -1102,6 +1439,11 @@ def setup_room_l28():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
+    gasmasked = Enemigos.Gasmasked()
+    gasmasked.center_y = 550
+    gasmasked.center_x = 450
+    room.enemigos_list.append(gasmasked)
+
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB5M.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "OBJETOS")  # OJO!
@@ -1122,6 +1464,15 @@ def setup_room_l29():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+
+    gasmasked = Enemigos.Gasmasked()
+    gasmasked.center_y = 700
+    gasmasked.center_x = 250
+    room.enemigos_list.append(gasmasked)
+    gasmasked = Enemigos.Gasmasked()
+    gasmasked.center_y = 200
+    gasmasked.center_x = 250
+    room.enemigos_list.append(gasmasked)
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB15M.tmx")
@@ -1144,6 +1495,23 @@ def setup_room_l30():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 700
+    esqueleto.center_x = 450
+    room.enemigos_list.append(esqueleto)
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 200
+    esqueleto.center_x = 450
+    room.enemigos_list.append(esqueleto)
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 600
+    esqueleto.center_x = 150
+    room.enemigos_list.append(esqueleto)
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 300
+    esqueleto.center_x = 150
+    room.enemigos_list.append(esqueleto)
+
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB5.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "OBJETOS")  # OJO!
@@ -1164,6 +1532,23 @@ def setup_room_l31():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+
+    masked = Enemigos.Masked()
+    masked.center_y = 450
+    masked.center_x = 250
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 450
+    masked.center_x = 350
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 450
+    masked.center_x = 550
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 450
+    masked.center_x = 650
+    room.enemigos_list.append(masked)
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB11M.tmx")
@@ -1207,6 +1592,19 @@ def setup_room_l33():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 700
+    esqueleto.center_x = 150
+    room.enemigos_list.append(esqueleto)
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 200
+    esqueleto.center_x = 150
+    room.enemigos_list.append(esqueleto)
+    gasmasked = Enemigos.Gasmasked()
+    gasmasked.center_y = 450
+    gasmasked.center_x = 150
+    room.enemigos_list.append(gasmasked)
+
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB3.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "OBJETOS")  # OJO!
@@ -1227,6 +1625,11 @@ def setup_room_l34():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 700
+    esqueleto.center_x = 450
+    room.enemigos_list.append(esqueleto)
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB6.tmx")
@@ -1249,6 +1652,27 @@ def setup_room_l35():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 650
+    esqueleto.center_x = 175
+    room.enemigos_list.append(esqueleto)
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 550
+    esqueleto.center_x = 200
+    room.enemigos_list.append(esqueleto)
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 700
+    esqueleto.center_x = 350
+    room.enemigos_list.append(esqueleto)
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 650
+    esqueleto.center_x = 375
+    room.enemigos_list.append(esqueleto)
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 650
+    esqueleto.center_x = 500
+    room.enemigos_list.append(esqueleto)
+
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB14M.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "OBJETOS")  # OJO!
@@ -1269,6 +1693,11 @@ def setup_room_l36():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 450
+    esqueleto.center_x = 200
+    room.enemigos_list.append(esqueleto)
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB5M.tmx")
@@ -1291,6 +1720,23 @@ def setup_room_l37():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
+    masked = Enemigos.Masked()
+    masked.center_y = 200
+    masked.center_x = 150
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 700
+    masked.center_x = 150
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 200
+    masked.center_x = 650
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 700
+    masked.center_x = 650
+    room.enemigos_list.append(masked)
+
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB13.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "OBJETOS")  # OJO!
@@ -1312,6 +1758,11 @@ def setup_room_l38():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
+    gasmasked = Enemigos.Gasmasked()
+    gasmasked.center_y = 350
+    gasmasked.center_x = 450
+    room.enemigos_list.append(gasmasked)
+
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB6M.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "OBJETOS")  # OJO!
@@ -1332,6 +1783,23 @@ def setup_room_l39():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 450
+    esqueleto.center_x = 150
+    room.enemigos_list.append(esqueleto)
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 450
+    esqueleto.center_x = 750
+    room.enemigos_list.append(esqueleto)
+    masked = Enemigos.Masked()
+    masked.center_y = 700
+    masked.center_x = 300
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 700
+    masked.center_x = 600
+    room.enemigos_list.append(masked)
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB6M.tmx")
@@ -1375,6 +1843,23 @@ def setup_room_l41():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
+    masked = Enemigos.Masked()
+    masked.center_y = 450
+    masked.center_x = 150
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 450
+    masked.center_x = 750
+    room.enemigos_list.append(masked)
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 200
+    esqueleto.center_x = 300
+    room.enemigos_list.append(esqueleto)
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 200
+    esqueleto.center_x = 600
+    room.enemigos_list.append(esqueleto)
+
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB6.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "OBJETOS")  # OJO!
@@ -1395,6 +1880,11 @@ def setup_room_l42():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+
+    gasmasked = Enemigos.Gasmasked()
+    gasmasked.center_y = 250
+    gasmasked.center_x = 450
+    room.enemigos_list.append(gasmasked)
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB12M.tmx")
@@ -1417,6 +1907,27 @@ def setup_room_l43():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 600
+    esqueleto.center_x = 300
+    room.enemigos_list.append(esqueleto)
+    esqueleto = Enemigos.Skeleton()
+    esqueleto.center_y = 300
+    esqueleto.center_x = 300
+    room.enemigos_list.append(esqueleto)
+    masked = Enemigos.Masked()
+    masked.center_y = 450
+    masked.center_x = 150
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 750
+    masked.center_x = 450
+    room.enemigos_list.append(masked)
+    masked = Enemigos.Masked()
+    masked.center_y = 200
+    masked.center_x = 450
+    room.enemigos_list.append(masked)
+
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB5M.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "OBJETOS")  # OJO!
@@ -1437,6 +1948,19 @@ def setup_room_l44():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+
+    gasmasked = Enemigos.Gasmasked()
+    gasmasked.center_y = 700
+    gasmasked.center_x = 450
+    room.enemigos_list.append(gasmasked)
+    gasmasked = Enemigos.Gasmasked()
+    gasmasked.center_y = 200
+    gasmasked.center_x = 450
+    room.enemigos_list.append(gasmasked)
+    gasmasked = Enemigos.Gasmasked()
+    gasmasked.center_y = 450
+    gasmasked.center_x = 150
+    room.enemigos_list.append(gasmasked)
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB5M.tmx")
@@ -1666,23 +2190,24 @@ def setup_habs():
 
 
 def check_cambio_habitacion(current_room, jugador_x, jugador_y):
+    cambiado_piso = False
     # Prision: (0-6)
     cambiado = True
     if jugador_x > SCREEN_WIDTH - 90 and current_room == 0:  # 0-->1
         current_room = 1
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_x < 90 and current_room == 1:  # 1-->0
         current_room = 0
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 1:  # 1-->2
         current_room = 2
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_x < 90 and current_room == 2:  # 2-->1
         current_room = 1
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_y > SCREEN_HEIGHT - 90 and current_room == 2:  # 2-->3
         current_room = 3
@@ -1702,11 +2227,11 @@ def check_cambio_habitacion(current_room, jugador_x, jugador_y):
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 4:  # 4-->5
         current_room = 5
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_x < 90 and current_room == 5:  # 5-->4
         current_room = 4
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_y < 90 and current_room == 4:  # 4-->6
         current_room = 6
@@ -1719,6 +2244,7 @@ def check_cambio_habitacion(current_room, jugador_x, jugador_y):
     elif jugador_y < 90 and current_room == 6:  # 6-->Ruinas 7(r1)
         current_room = 7
         jugador_y = 200  # emepzamos por la parte de abajo la primera sala de ruinas
+        cambiado_piso = True
 
 
     # Ruinas: (7-21)
@@ -1741,11 +2267,11 @@ def check_cambio_habitacion(current_room, jugador_x, jugador_y):
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 9:  # 9(r3)-->10(r4)
         current_room = 10
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_x < 90 and current_room == 10:  # 10(r4)-->9(r3)
         current_room = 9
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_y > SCREEN_HEIGHT - 90 and current_room == 10:  # 10(r4)-->11(r5)
         current_room = 11
@@ -1765,28 +2291,28 @@ def check_cambio_habitacion(current_room, jugador_x, jugador_y):
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 12:  # 12(r6)-->13(r7)
         current_room = 13
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_x < 90 and current_room == 13:  # 13(r7)-->12(r6)
         current_room = 12
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 13:  # 13(r7)-->14(r8)
         current_room = 14
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_x < 90 and current_room == 14:  # 14(r8)-->13(r7)
         current_room = 13
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     # Desvío R3
     elif jugador_x < 90 and current_room == 9:  # 9(r3)-->15(r9)
         current_room = 15
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 15:  # 15(r9)-->9(r3)
         current_room = 9
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_y > SCREEN_HEIGHT - 90 and current_room == 15:  # 15(r9)-->16(r10)
         current_room = 16
@@ -1799,19 +2325,19 @@ def check_cambio_habitacion(current_room, jugador_x, jugador_y):
     # Desvío R1
     elif jugador_x < 90 and current_room == 7:  # 7(r1)-->17(r11)
         current_room = 17
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 17:  # 17(r11)-->7(r1)
         current_room = 7
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_x < 90 and current_room == 17:  # 17(r11)-->18(r12)
         current_room = 18
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 18:  # 18(r12)-->17(r11)
         current_room = 17
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_y < 90 and current_room == 18:  # 18(r12)-->19(r13)
         current_room = 19
@@ -1823,11 +2349,11 @@ def check_cambio_habitacion(current_room, jugador_x, jugador_y):
 
     elif jugador_x < 90 and current_room == 18:  # 18(r12)-->20(r14)
         current_room = 20
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 20:  # 20(r14)-->18(r12)
         current_room = 18
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_y > SCREEN_HEIGHT - 90 and current_room == 20:  # 20(r14)-->21(r15)
         current_room = 21
@@ -1840,7 +2366,7 @@ def check_cambio_habitacion(current_room, jugador_x, jugador_y):
     elif jugador_y < 90 and current_room == 14:  # 14(r8)-->22(l1)
         current_room = 22
         jugador_y = 300
-
+        cambiado_piso = True
 
     # Laboratorio:
 
@@ -1870,43 +2396,43 @@ def check_cambio_habitacion(current_room, jugador_x, jugador_y):
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 25:  # 25(l4)-->26(l5)
         current_room = 26
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_x < 90 and current_room == 26:  # 26(l5)-->25(l4)
         current_room = 25
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 26:  # 26(l5)-->27(l6)
         current_room = 27
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_x < 90 and current_room == 27:  # 27(l6)-->26(l5)
         current_room = 26
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 27:  # 27(l6)-->28(l7)
         current_room = 28
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_x < 90 and current_room == 28:  # 28(l7)-->27(l6)
         current_room = 27
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 28:  # 28(l7)-->29(l8)
         current_room = 29
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_x < 90 and current_room == 29:  # 29(l8)-->28(l7)
         current_room = 28
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 29:  # 29(l8)-->30(l9)
         current_room = 30
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_x < 90 and current_room == 30:  # 30(l9)-->29(l8)
         current_room = 29
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_y < 90 and current_room == 28:  # 28(l7)-->31(l10)
         current_room = 31
@@ -1934,27 +2460,27 @@ def check_cambio_habitacion(current_room, jugador_x, jugador_y):
 
     elif jugador_x < 90 and current_room == 33:  # 33(l12)-->34(l13)
         current_room = 34
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 34:  # 34(l13)-->33(l12)
         current_room = 33
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_x < 90 and current_room == 34:  # 34(l13)-->35(l14)
         current_room = 35
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 35:  # 35(l14)-->34(l13)
         current_room = 34
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_x < 90 and current_room == 35:  # 35(l14)-->22(l1)
         current_room = 22
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 22:  # 22(l1)-->35(l14)
         current_room = 35
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_y < 90 and current_room == 34:  # 34(l13)-->36(l15)
         current_room = 36
@@ -1974,11 +2500,11 @@ def check_cambio_habitacion(current_room, jugador_x, jugador_y):
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 37:  # 37(l16)-->38(l17)
         current_room = 38
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_x < 90 and current_room == 38:  # 38(l17)-->37(l16)
         current_room = 37
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_y < 90 and current_room == 38:  # 38(l17)-->39(l18)
         current_room = 39
@@ -1998,19 +2524,19 @@ def check_cambio_habitacion(current_room, jugador_x, jugador_y):
 
     elif jugador_x < 90 and current_room == 40:  # 40(l19)-->41(l20)
         current_room = 41
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 41:  # 41(l20)-->40(l19)
         current_room = 40
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_x < 90 and current_room == 41:  # 41(l20)-->42(l21)
         current_room = 42
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 42:  # 42(l21)-->41(l20)
         current_room = 41
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_y > SCREEN_HEIGHT - 90 and current_room == 42:  # 42(l21)-->43(l22)
         current_room = 43
@@ -2030,27 +2556,27 @@ def check_cambio_habitacion(current_room, jugador_x, jugador_y):
 
     elif jugador_x < 90 and current_room == 44:  # 44(l23)-->45(l24)
         current_room = 45
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 45:  # 45(l24)-->44(l23)
         current_room = 44
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 44:  # 44(l23)-->37(l16)
         current_room = 37
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_x < 90 and current_room == 37:  # 37(l16)-->44(l23)
         current_room = 44
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_x < 90 and current_room == 45:  # 45(l24)-->46(l25)
         current_room = 46
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 46:  # 46(l25)-->45(l24)
         current_room = 45
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_y > SCREEN_HEIGHT - 90 and current_room == 46:  # 46(l25)-->47(l26)
         current_room = 47
@@ -2070,43 +2596,43 @@ def check_cambio_habitacion(current_room, jugador_x, jugador_y):
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 48:  # 48(l27)-->22(l1)
         current_room = 22
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_x < 90 and current_room == 22:  # 22(l1)-->48(l27)
         current_room = 48
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_x < 90 and current_room == 47:  # 47(l26)-->49(l28)
         current_room = 49
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 49:  # 49(l28)-->47(l26)
         current_room = 47
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_x < 90 and current_room == 49:  # 49(l28)-->50(l29)
         current_room = 50
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 50:  # 50(l29)-->49(l28)
         current_room = 49
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_x < 90 and current_room == 50:  # 50(l29)-->51(l30)
         current_room = 51
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 51:  # 51(l30)-->50(l29)
         current_room = 50
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_x < 90 and current_room == 51:  # 51(l30)-->52(l31)
         current_room = 52
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 52:  # 52(l31)-->51(l30)
         current_room = 51
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_y > SCREEN_HEIGHT - 90 and current_room == 52:  # 52(l31)-->53(l32)
         current_room = 53
@@ -2118,11 +2644,11 @@ def check_cambio_habitacion(current_room, jugador_x, jugador_y):
 
     elif jugador_x < 90 and current_room == 53:  # 53(l32)-->54(l33)
         current_room = 54
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 54:  # 54(l33)-->53(l32)
         current_room = 53
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_y > SCREEN_HEIGHT - 90 and current_room == 53:  # 53(l32)-->55(l34)
         current_room = 55
@@ -2142,19 +2668,19 @@ def check_cambio_habitacion(current_room, jugador_x, jugador_y):
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 56:  # 56(l35)-->57(l36)
         current_room = 57
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_x < 90 and current_room == 57:  # 57(l36)-->56(l35)
         current_room = 56
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 57:  # 57(l36)-->58(l37)
         current_room = 58
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_x < 90 and current_room == 58:  # 58(l37)-->57(l36)
         current_room = 57
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_y < 90 and current_room == 58:  # 58(l37)-->59(l38)
         current_room = 59
@@ -2206,35 +2732,35 @@ def check_cambio_habitacion(current_room, jugador_x, jugador_y):
 
     elif jugador_x < 90 and current_room == 63:  # 63(l42)-->64(l43)
         current_room = 64
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 64:  # 64(l43)-->63(l42)
         current_room = 63
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_x < 90 and current_room == 64:  # 64(l43)-->65(l44)
         current_room = 65
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 65:  # 65(l44)-->64(l43)
         current_room = 64
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_x < 90 and current_room == 65:  # 65(l44)-->66(l45)
         current_room = 66
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 66:  # 66(l45)-->65(l44)
         current_room = 65
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_x > SCREEN_WIDTH - 90 and current_room == 30:  # 30(l9)-->67(l46)
         current_room = 67
-        jugador_x = 100
+        jugador_x = 125
 
     elif jugador_x < 90 and current_room == 67:  # 67(46)-->30(l9)
         current_room = 30
-        jugador_x = SCREEN_WIDTH - 110
+        jugador_x = SCREEN_WIDTH - 150
 
     # Pasar a la sala del boss final (no se puede volver)
     elif jugador_y > SCREEN_HEIGHT - 90 and current_room == 66:  # 66(l45)-->68(boss)
@@ -2243,4 +2769,4 @@ def check_cambio_habitacion(current_room, jugador_x, jugador_y):
     else:
         cambiado = False
 
-    return current_room, jugador_x, jugador_y, cambiado
+    return current_room, jugador_x, jugador_y, cambiado, cambiado_piso

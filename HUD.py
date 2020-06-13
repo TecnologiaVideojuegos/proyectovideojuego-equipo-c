@@ -58,11 +58,11 @@ def dibujar_pantalla_de_inicio():
 
 def dibujar_controles():
     arcade.draw_lrtb_rectangle_filled(0, 900, 900, 0, arcade.color.BLACK)
-    arcade.draw_text("Moverse: W,A,S,D ó las flechas", 0, 550, arcade.color.WOOD_BROWN, 20, 900, "center")
-    arcade.draw_text("Disparar: Q", 0, 450, arcade.color.WOOD_BROWN, 20, 900, "center")
-    arcade.draw_text("Bloquear dirección: Espacio", 0, 350, arcade.color.WOOD_BROWN, 20, 900, "center")
-    arcade.draw_text("Pausar/Reaunudar el juego: P", 0, 250, arcade.color.WOOD_BROWN, 20, 900, "center")
-    arcade.draw_text("Pulsa retroceso para volver", 0, 100, arcade.color.WOOD_BROWN, 20, 900, "center")
+    arcade.draw_text("Moverse: W,A,S,D ó las flechas", 0, 550, arcade.color.GUPPIE_GREEN, 20, 900, "center")
+    arcade.draw_text("Disparar: Q", 0, 450, arcade.color.GUPPIE_GREEN, 20, 900, "center")
+    arcade.draw_text("Bloquear dirección: Espacio", 0, 350, arcade.color.GUPPIE_GREEN, 20, 900, "center")
+    arcade.draw_text("Pausar/Reaunudar el juego: P", 0, 250, arcade.color.GUPPIE_GREEN, 20, 900, "center")
+    arcade.draw_text("Pulsa retroceso para volver", 0, 100, arcade.color.GUPPIE_GREEN, 20, 900, "center")
 
 
 def dibujar_hud_pausado(buffs):
