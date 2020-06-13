@@ -5,25 +5,25 @@ import os
 def dibujar_hud(vida, carga_fantasmal):
     """Dibuja en pantalla el hud si se invoca en el método on_draw"""
     # Vida
-    if vida == 10:
+    if 9 < vida <= 10:
         vida_x = 0
-    elif vida == 9:
+    elif 8 < vida <= 9:
         vida_x = -20  # Cada barra de vida una son 20 pixeles
-    elif vida == 8:
+    elif 7 < vida <= 8:
         vida_x = -40
-    elif vida == 7:
+    elif 6 < vida <= 7:
         vida_x = -60
-    elif vida == 6:
+    elif 5 < vida <= 6:
         vida_x = -80
-    elif vida == 5:
+    elif 4 < vida <= 5:
         vida_x = -100
-    elif vida == 4:
+    elif 3 < vida <= 4:
         vida_x = -120
-    elif vida == 3:
+    elif 2 < vida <= 3:
         vida_x = -140
-    elif vida == 2:
+    elif 1 < vida <= 2:
         vida_x = -160
-    elif vida == 1:
+    elif 0 < vida <= 1:
         vida_x = -180
     else:
         return  # no tenemos que dibujar vida
