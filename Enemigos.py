@@ -5,7 +5,6 @@ import Main
 import Jugador
 import random
 
-
 RIGHT_FACING = 0
 LEFT_FACING = 1
 UP_FACING = 2
@@ -32,6 +31,7 @@ class Masked(arcade.Sprite):
     def __init__(self):
         """Constructor del sprite del jugador"""
         super().__init__()
+
         self.character_face_direction = RIGHT_FACING
 
         self.cur_texture = 0
@@ -41,54 +41,51 @@ class Masked(arcade.Sprite):
         self.change_x = 0
         self.change_y = 0
 
-        self.textura_quieto = load_texture_4dir("sprites_master/MASKED1.png", "sprites_master/MASKED10.png",
-                                                "sprites_master/MASKED7.png")
+        self.textura_quieto = load_texture_4dir("sprites_master" + os.path.sep + "MASKED1.png",
+                                                "sprites_master" + os.path.sep + "MASKED10.png",
+                                                "sprites_master" + os.path.sep + "MASKED7.png")
 
         self.textura_andar = []
         for i in range(10, 13):
-            self.textura_andar.append(load_texture_4dir(f"sprites_master/MASKED{i - 6}.png", f"sprites_master/MASKED{i}.png",
-                                        f"sprites_master/MASKED{i - 3}.png"))
+            self.textura_andar.append(
+                load_texture_4dir("sprites_master" + os.path.sep + f"MASKED{i - 6}.png",
+                                  "sprites_master" + os.path.sep + f"MASKED{i}.png",
+                                  "sprites_master" + os.path.sep + f"MASKED{i - 3}.png"))
 
     def recibir_damage(self, damage):
         self.vida -= damage
 
-
     def follow_sprite(self, player_sprite, velocidad_enemigos):
-        """
-        This function will move the current sprite towards whatever
-        other sprite is specified as a parameter.
+        """Esta función se encarga de que el enemigo siga al jugador"""
 
-        We use the 'min' function here to get the sprite to line up with
-        the target sprite, and not jump around if the sprite is not off
-        an exact multiple of SPRITE_SPEED.
-        """
 
         self.center_x += self.change_x
         self.center_y += self.change_y
 
-        # Random 1 in 100 chance that we'll change from our old direction and
-        # then re-aim toward the player
+
         if random.randrange(1) == 0:
             start_x = self.center_x
             start_y = self.center_y
 
-            # Get the destination location for the bullet
+            # Ponemos como destino las coordenadas del jugador.
             dest_x = player_sprite.center_x
             dest_y = player_sprite.center_y
 
-            # Do math to calculate how to get the bullet to the destination.
-            # Calculation the angle in radians between the start points
-            # and end points. This is the angle the bullet will travel.
+            # Realizamos matemáticas para poder saber como llegar al jugador
+            # Calculamos el ángulo en radianes entre los puntos de salida y fin.
+            # Este es el ángulo que seguirá el enemigo.
             x_diff = dest_x - start_x
             y_diff = dest_y - start_y
             angle = math.atan2(y_diff, x_diff)
 
-            # Taking into account the angle, calculate our change_x
-            # and change_y. Velocity is how fast the bullet travels.
+            # Teniendo en cuenta el ángulo, calculamos change_x
+            # y change_y.
             self.change_x = math.cos(angle) * velocidad_enemigos
             self.change_y = math.sin(angle) * velocidad_enemigos
 
     def atacar(self, skeleton, velocidad_disparo_enemigos, jugador, lista_balas_laser, lista_balas_gas):
+        #Dado que todos los enemigos son introducidos en una misma lista, he necesitado meter un método también para
+        #el enemigo cuerpo a cuerpo, aunque no haga nada
         pass
 
     def update_animation(self, delta_time: float = 1 / 60):
@@ -127,51 +124,41 @@ class Skeleton(arcade.Sprite):
 
         self.vida = 1
 
-        self.textura_quieto = load_texture_4dir("sprites_master/ESQUELETO1.png", "sprites_master/ESQUELETO10.png",
-                                                "sprites_master/ESQUELETO7.png")
+        self.textura_quieto = load_texture_4dir("sprites_master" + os.path.sep + "ESQUELETO1.png",
+                                                "sprites_master" + os.path.sep + "ESQUELETO10.png",
+                                                "sprites_master" + os.path.sep + "ESQUELETO7.png")
 
         self.textura_andar = []
         for i in range(10, 13):
-
-            self.textura_andar.append(load_texture_4dir(f"sprites_master/ESQUELETO{i - 6}.png", f"sprites_master/ESQUELETO{i}.png",
-                                        f"sprites_master/ESQUELETO{i - 3}.png"))
+            self.textura_andar.append(
+                load_texture_4dir("sprites_master" + os.path.sep + f"ESQUELETO{i - 6}.png",
+                                  "sprites_master" + os.path.sep + f"ESQUELETO{i}.png",
+                                  "sprites_master" + os.path.sep + f"ESQUELETO{i - 3}.png"))
 
         self.lista_laser = arcade.SpriteList()
 
-        self.sonido_laser = arcade.load_sound("Sonidos/Disparo pew.wav")
+        self.sonido_laser = arcade.load_sound("Sonidos" + os.path.sep + "Disparo pew.wav")
 
     def follow_sprite(self, player_sprite, velocidad_enemigos):
-        """
-        This function will move the current sprite towards whatever
-        other sprite is specified as a parameter.
-
-        We use the 'min' function here to get the sprite to line up with
-        the target sprite, and not jump around if the sprite is not off
-        an exact multiple of SPRITE_SPEED.
-        """
 
         self.center_x += self.change_x
         self.center_y += self.change_y
 
-        # Random 1 in 100 chance that we'll change from our old direction and
-        # then re-aim toward the player
+
         if random.randrange(1) == 0:
             start_x = self.center_x
             start_y = self.center_y
 
-            # Get the destination location for the bullet
+
             dest_x = player_sprite.center_x
             dest_y = player_sprite.center_y
 
-            # Do math to calculate how to get the bullet to the destination.
-            # Calculation the angle in radians between the start points
-            # and end points. This is the angle the bullet will travel.
+
             x_diff = dest_x - start_x
             y_diff = dest_y - start_y
             angle = math.atan2(y_diff, x_diff)
 
-            # Taking into account the angle, calculate our change_x
-            # and change_y. Velocity is how fast the bullet travels.
+
             self.change_x = math.cos(angle) * velocidad_enemigos
             self.change_y = math.sin(angle) * velocidad_enemigos
 
@@ -179,8 +166,8 @@ class Skeleton(arcade.Sprite):
         self.change_y = 0
         self.change_x = 0
         if random.randrange(70) == 1:
-            laser = arcade.Sprite("sprites_master/LASER.png")
-
+            laser = arcade.Sprite("sprites_master" + os.path.sep + "LASER.png")
+            self.sonido_laser.play()
 
             if self.character_face_direction == RIGHT_FACING:
                 laser.left = skeleton.right
@@ -266,15 +253,18 @@ class Gasmasked(arcade.Sprite):
 
         self.vida = 3
 
-        self.textura_quieto = load_texture_4dir("sprites_master/GASMASK1.png", "sprites_master/GASMASK10.png",
-                                                "sprites_master/GASMASK7.png")
+        self.textura_quieto = load_texture_4dir("sprites_master" + os.path.sep + "GASMASK1.png",
+                                                "sprites_master" + os.path.sep + "GASMASK10.png",
+                                                "sprites_master" + os.path.sep + "GASMASK7.png")
 
         self.textura_andar = []
         for i in range(10, 13):
-            texture = load_texture_4dir(f"sprites_master/GASMASK{i-6}.png", f"sprites_master/GASMASK{i}.png", f"sprites_master/GASMASK{i-3}.png")
+            texture = load_texture_4dir("sprites_master" + os.path.sep + f"GASMASK{i - 6}.png",
+                                        "sprites_master" + os.path.sep + f"GASMASK{i}.png",
+                                        "sprites_master" + os.path.sep + f"GASMASK{i - 3}.png")
             self.textura_andar.append(texture)
 
-        self.sonido_disparar = arcade.load_sound("Sonidos/Ataque Gas.wav")
+        self.sonido_disparar = arcade.load_sound("Sonidos" + os.path.sep + "Ataque Gas.wav")
 
         self.lista_gases = arcade.SpriteList()
 
@@ -317,10 +307,8 @@ class Gasmasked(arcade.Sprite):
         self.change_y = 0
         self.change_x = 0
         if random.randrange(20) == 1:
-            proyectil_gaseoso = arcade.Sprite("sprites_master/GASATTACK.png")
-
-
-
+            proyectil_gaseoso = arcade.Sprite("sprites_master" + os.path.sep + "GASATTACK.png")
+            self.sonido_disparar.play()
             if self.character_face_direction == RIGHT_FACING:
                 proyectil_gaseoso.left = gasmasked.right
                 proyectil_gaseoso.center_y = gasmasked.center_y
@@ -390,4 +378,3 @@ class Gasmasked(arcade.Sprite):
         if self.cur_texture >= NUM_TEXTURAS_ANDAR * UPDATES_PER_FRAME:
             self.cur_texture = 0
         self.texture = self.textura_andar[self.cur_texture // UPDATES_PER_FRAME][self.character_face_direction]
-

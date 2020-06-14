@@ -131,7 +131,7 @@ class PhantomGear(arcade.Window):
         # Rooms
         self.cambiado = False
         self.rooms = Habitaciones.setup_habs()  # lista de todas las habitaciones
-        self.current_room = 66  # habitacion inicial (cambiar a 0)/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+        self.current_room = 1  # habitacion inicial (cambiar a 0)/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 
         # Fisicas para la habitacion en la que estemos
         self.physics_engine = arcade.PhysicsEngineSimple(self.jugador, self.rooms[self.current_room].wall_list)
@@ -272,12 +272,14 @@ class PhantomGear(arcade.Window):
 
             # Si estamos en modo fantasmal y matamos a todos los enemigos de la sala
             # --> reset de modo fantasmal (quitar buffs y demás)
-            if len(self.rooms[self.current_room].enemigos_list) == 0 and self.jugador.estado_fantasmal:
-                self.vida_jugador = 10
-                self.jugador.desactivar_modo_fantasmal()
-                # Quitamos los buffs
-                if self.buffs_activos[1]:  # si tenemos el buff de velocidad activo
-                    self.velocidad_jugador /= 1.5
+            if len(self.rooms[self.current_room].enemigos_list) == 0 and self.jugador.estado_fantasmal and self.rooms[
+                self.current_room].boss_list is not None:
+                if len(self.rooms[self.current_room].boss_list) == 0:
+                    self.vida_jugador = 10
+                    self.jugador.desactivar_modo_fantasmal()
+                    # Quitamos los buffs
+                    if self.buffs_activos[1]:  # si tenemos el buff de velocidad activo
+                        self.velocidad_jugador /= 1.5
             # Si estamos en modo fantasamal y nos quedamos sin tiempo
             # --> game over
             if self.jugador.contador_de_muerte <= 0 and self.jugador.estado_fantasmal:
@@ -438,6 +440,15 @@ class PhantomGear(arcade.Window):
                 if self.vida_jugador >= 1 and float(self.vida_jugador).is_integer():
                     self.sonido_recibir_damage_jugador.play()
 
+            if self.rooms[self.current_room].boss_list is not None:
+                hit_list_boss = arcade.check_for_collision_with_list(self.jugador,
+                                                                     self.rooms[self.current_room].boss_list)
+
+                if len(hit_list_boss) > 0:
+                    self.vida_jugador -= 0.25
+                    if self.vida_jugador >= 1 and float(self.vida_jugador).is_integer():
+                        self.sonido_recibir_damage_jugador.play()
+
             for enemigos in self.rooms[self.current_room].enemigos_list:
                 enemigos.update_animation()
                 enemigos.follow_sprite(self.jugador, self.velocidad_enemigos)
@@ -455,12 +466,13 @@ class PhantomGear(arcade.Window):
                     boss.update_animation()
                     boss.movimiento(self.jugador, self.velocidad_boss)
                     boss.generar_enemigos(self.rooms[self.current_room].enemigos_list)
-                    tuerca = self.jugador.disparar(boss, self.velocidad_disparo)
-                    self.bullet_list.append(tuerca)
-                    tuerca = self.jugador.disparar(boss, self.velocidad_disparo, True)
-                    self.bullet_list.append(tuerca)
-                    tuerca = self.jugador.disparar(boss, self.velocidad_disparo, False, True)
-                    self.bullet_list.append(tuerca)
+                    if random.randrange(200) == 1:
+                        tuerca = boss.disparar(boss, self.velocidad_disparo, self.lista_balas_boss, )
+                        self.bullet_list.append(tuerca)
+                        tuerca = boss.disparar(boss, self.velocidad_disparo, self.lista_balas_boss, True)
+                        self.bullet_list.append(tuerca)
+                        tuerca = boss.disparar(boss, self.velocidad_disparo, self.lista_balas_boss, False, True)
+                        self.bullet_list.append(tuerca)
 
                 for enemigos in self.rooms[self.current_room].enemigos_list:
                     self.physics_engine_enemigos = arcade.PhysicsEngineSimple(enemigos,

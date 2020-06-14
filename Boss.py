@@ -5,7 +5,6 @@ import Main
 import random
 import math
 
-
 RIGHT_FACING = 0
 LEFT_FACING = 1
 UP_FACING = 2
@@ -13,6 +12,7 @@ DOWN_FACING = 3
 
 UPDATES_PER_FRAME = 10
 NUM_TEXTURAS_ANDAR = 3
+
 
 def load_texture_4dir(filename_lados, filename_up, filename_down):
     """
@@ -26,7 +26,8 @@ def load_texture_4dir(filename_lados, filename_up, filename_down):
         arcade.load_texture(filename_down)
     ]
 
-class boss (arcade.Sprite):
+
+class boss(arcade.Sprite):
 
     def __init__(self):
         super().__init__()
@@ -40,14 +41,17 @@ class boss (arcade.Sprite):
         self.change_x = 0
         self.change_y = 0
 
-        self.textura_quieto = load_texture_4dir("sprites_master/BOSS1.png", "sprites_master/BOSS10.png",
-                                                "sprites_master/BOSS7.png")
+        self.textura_quieto = load_texture_4dir("sprites_master" + os.path.sep + "BOSS1.png",
+                                                "sprites_master" + os.path.sep + "BOSS10.png",
+                                                "sprites_master" + os.path.sep + "BOSS7.png")
 
         self.textura_andar = []
         for i in range(10, 13):
             self.textura_andar.append(
-                load_texture_4dir(f"sprites_master/BOSS{i - 6}.png", f"sprites_master/BOSS{i}.png",
-                                  f"sprites_master/BOSS{i - 3}.png"))
+                load_texture_4dir("sprites_master" + os.path.sep + f"BOSS{i - 6}.png",
+                                  "sprites_master" + os.path.sep + f"BOSS{i}.png",
+                                  f"sprites_master" + os.path.sep + f"BOSS{i - 3}.png"))
+        self.sonido_disparar = arcade.load_sound("Sonidos" + os.path.sep + "ataque boss.wav")
 
     def recibir_damage(self, damage):
         self.vida -= damage
@@ -88,7 +92,7 @@ class boss (arcade.Sprite):
             self.change_x = math.cos(angle) * velocidad_enemigos
             self.change_y = math.sin(angle) * velocidad_enemigos
 
-    def update_animation(self, delta_time: float = 1 / 60 ):
+    def update_animation(self, delta_time: float = 1 / 60):
 
         # Saber si hay que mirar hacia la derecha, izquierda, arriba o abajo.
         if self.change_x < 0 and (self.character_face_direction == RIGHT_FACING or UP_FACING or DOWN_FACING):
@@ -121,7 +125,6 @@ class boss (arcade.Sprite):
             else:
                 self.character_face_direction = DOWN_FACING"""
 
-
     def generar_enemigos(self, lista_enemigos):
         if random.randrange(1000) == 1:
             masked = Enemigos.Masked()
@@ -138,74 +141,70 @@ class boss (arcade.Sprite):
             skeleton.center_x = random.choice((self.center_x - 40, self.center_x + 40))
             skeleton.center_y = random.choice((self.center_y - 40, self.center_y + 40))
             lista_enemigos.append(skeleton)
-    def disparar(self, boss, velocidad_disparo, lista_balas_boss,  diagonal=False, diagonal_invertida=False):
-        if random.randrange(200) == 1:
-            tuerca = arcade.sprite("sprites_master/ENGRANAJE.png")
-            if self.character_face_direction == RIGHT_FACING:
-                if diagonal:  # Arriba -->
-                    tuerca.left = boss.right
-                    tuerca.center_y = boss.center_y
-                    tuerca.change_x = velocidad_disparo
-                    tuerca.change_y = velocidad_disparo
-                elif diagonal_invertida:  # Abajo -->
-                    tuerca.left = boss.right
-                    tuerca.center_y = boss.center_y
-                    tuerca.change_x = velocidad_disparo
-                    tuerca.change_y = -velocidad_disparo
-                else:  # -->
-                    tuerca.left = boss.right
-                    tuerca.center_y = boss.center_y
-                    tuerca.change_x = velocidad_disparo
-            elif self.character_face_direction == LEFT_FACING:
-                if diagonal:  # Abajo <--
-                    tuerca.right = boss.left
-                    tuerca.center_y = boss.center_y
-                    tuerca.change_x = -velocidad_disparo
-                    tuerca.change_y = -velocidad_disparo
-                elif diagonal_invertida:  # Arriba <--
-                    tuerca.right = boss.left
-                    tuerca.center_y = boss.center_y
-                    tuerca.change_x = -velocidad_disparo
-                    tuerca.change_y = velocidad_disparo
-                else:  # <--
-                    tuerca.right = boss.left
-                    tuerca.center_y = boss.center_y
-                    tuerca.change_x = -velocidad_disparo
-            elif self.character_face_direction == UP_FACING:
-                if diagonal:  # Arriba -->
-                    tuerca.bottom = boss.top
-                    tuerca.center_x = boss.center_x
-                    tuerca.change_x = velocidad_disparo
-                    tuerca.change_y = velocidad_disparo
-                elif diagonal_invertida:  # Arriba <--
-                    tuerca.bottom = boss.top
-                    tuerca.center_x = boss.center_x
-                    tuerca.change_x = -velocidad_disparo
-                    tuerca.change_y = velocidad_disparo
-                else:  # Arriba
-                    tuerca.bottom = boss.top
-                    tuerca.center_x = boss.center_x
-                    tuerca.change_y = velocidad_disparo
-            elif self.character_face_direction == DOWN_FACING:
-                if diagonal:  # Abajo <--
-                    tuerca.top = boss.bottom
-                    tuerca.center_x = boss.center_x
-                    tuerca.change_x = -velocidad_disparo
-                    tuerca.change_y = -velocidad_disparo
-                elif diagonal_invertida:  # Abajo -->
-                    tuerca.top = boss.bottom
-                    tuerca.center_x = boss.center_x
-                    tuerca.change_x = velocidad_disparo
-                    tuerca.change_y = -velocidad_disparo
-                else:  # Abajo
-                    tuerca.top = boss.bottom
-                    tuerca.center_x = boss.center_x
-                    tuerca.change_y = -velocidad_disparo
-            lista_balas_boss.append(bala)
-            return tuerca
 
+    def disparar(self, boss, velocidad_disparo, lista_balas_boss, diagonal=False, diagonal_invertida=False):
+        tuerca = arcade.Sprite("sprites_master" + os.path.sep + "ENGRANAJE.png")
+        self.sonido_disparar.play()
 
-
-
-
-
+        if self.character_face_direction == RIGHT_FACING:
+            if diagonal:  # Arriba -->
+                tuerca.left = boss.right
+                tuerca.center_y = boss.center_y
+                tuerca.change_x = velocidad_disparo
+                tuerca.change_y = velocidad_disparo
+            elif diagonal_invertida:  # Abajo -->
+                tuerca.left = boss.right
+                tuerca.center_y = boss.center_y
+                tuerca.change_x = velocidad_disparo
+                tuerca.change_y = -velocidad_disparo
+            else:  # -->
+                tuerca.left = boss.right
+                tuerca.center_y = boss.center_y
+                tuerca.change_x = velocidad_disparo
+        elif self.character_face_direction == LEFT_FACING:
+            if diagonal:  # Abajo <--
+                tuerca.right = boss.left
+                tuerca.center_y = boss.center_y
+                tuerca.change_x = -velocidad_disparo
+                tuerca.change_y = -velocidad_disparo
+            elif diagonal_invertida:  # Arriba <--
+                tuerca.right = boss.left
+                tuerca.center_y = boss.center_y
+                tuerca.change_x = -velocidad_disparo
+                tuerca.change_y = velocidad_disparo
+            else:  # <--
+                tuerca.right = boss.left
+                tuerca.center_y = boss.center_y
+                tuerca.change_x = -velocidad_disparo
+        elif self.character_face_direction == UP_FACING:
+            if diagonal:  # Arriba -->
+                tuerca.bottom = boss.top
+                tuerca.center_x = boss.center_x
+                tuerca.change_x = velocidad_disparo
+                tuerca.change_y = velocidad_disparo
+            elif diagonal_invertida:  # Arriba <--
+                tuerca.bottom = boss.top
+                tuerca.center_x = boss.center_x
+                tuerca.change_x = -velocidad_disparo
+                tuerca.change_y = velocidad_disparo
+            else:  # Arriba
+                tuerca.bottom = boss.top
+                tuerca.center_x = boss.center_x
+                tuerca.change_y = velocidad_disparo
+        elif self.character_face_direction == DOWN_FACING:
+            if diagonal:  # Abajo <--
+                tuerca.top = boss.bottom
+                tuerca.center_x = boss.center_x
+                tuerca.change_x = -velocidad_disparo
+                tuerca.change_y = -velocidad_disparo
+            elif diagonal_invertida:  # Abajo -->
+                tuerca.top = boss.bottom
+                tuerca.center_x = boss.center_x
+                tuerca.change_x = velocidad_disparo
+                tuerca.change_y = -velocidad_disparo
+            else:  # Abajo
+                tuerca.top = boss.bottom
+                tuerca.center_x = boss.center_x
+                tuerca.change_y = -velocidad_disparo
+        lista_balas_boss.append(tuerca)
+        return tuerca
