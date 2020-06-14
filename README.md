@@ -1,6 +1,6 @@
 # proyectovideojuego-equipo-c
 Integrantes:
-  •	Alberto Rodríguez Blanco: Jefe de Equipo	
+  •	Alberto Rodríguez Blanco: Jefe de Equipo	<p>
   •	Rodrigo Roca Román: Programador
   •	Pablo Victoria Fernández: Programador
   •	Tomás García Sánchez: Diseñador Gráfico
