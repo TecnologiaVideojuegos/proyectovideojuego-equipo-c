@@ -1,8 +1,8 @@
 # proyectovideojuego-equipo-c
-Integrantes:
+Integrantes:<p>
   •	Alberto Rodríguez Blanco: Jefe de Equipo	<p>
-  •	Rodrigo Roca Román: Programador
-  •	Pablo Victoria Fernández: Programador
-  •	Tomás García Sánchez: Diseñador Gráfico
-  •	Alejandro Grueso Laso Música y efectos de sonido 
+  •	Rodrigo Roca Román: Programador<p>
+  •	Pablo Victoria Fernández: Programador<p>
+  •	Tomás García Sánchez: Diseñador Gráfico<p>
+  •	Alejandro Grueso Laso Música y efectos de sonido <p>
 
