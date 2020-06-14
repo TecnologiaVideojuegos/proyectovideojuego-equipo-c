@@ -5,8 +5,8 @@
 
 ### Integrantes
 - Alberto Rodríguez Blanco : Jefe de Equipo
-- Fernando Parra Romero: Programador
-- Fernando Parra Romero: Programador
-- Diego Plaza Calvo: Diseñador Gráfico 
-- Alejandro Cedillo Aladid: Música y efectos de sonido
+- Rodrigo Roca Román: Programador
+- Pablo Victoria Fernández: Programador
+- Tomás García Sánchez: Diseñador Gráfico 
+- Alejandro Grueso Laso: Música y efectos de sonido
 ## [Pagina Web Del Videojuego](https://albrb9.github.io/Phanton-Gear-Web/)
