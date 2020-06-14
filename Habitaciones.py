@@ -2050,6 +2050,12 @@ def setup_room_lboss():
     # Definir muros
     room.wall_list = obstaculos
 
+    #Boss
+    boss = Boss.boss()
+    boss.center_x= 450
+    boss.center_y = 450
+    room.boss_list.append(boss)
+
     return room
 
 
