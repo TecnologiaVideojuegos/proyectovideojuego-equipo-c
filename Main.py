@@ -67,13 +67,12 @@ class PhantomGear(arcade.Window):
         # Pausar el juego
         self.pausado = False
         # Musica de fondo
-        self.musica_lab = arcade.load_sound("Sonidos" + os.path.sep + "Piso Final.wav")
-        self.musica_ruinas = arcade.load_sound("Sonidos" + os.path.sep + "piso2.wav")
-        self.musica_prision_activa = False
-        self.musica_ruinas_activa = False
-        self.musica_lab_activa = False
+        self.musica = arcade.load_sound("Sonidos" + os.path.sep + "Musica final.wav")
+        self.contador_loop_musica = 0
+        self.musica_activa = False
         # Otros sonidos
         self.sonido_cambio_piso = arcade.load_sound("Sonidos" + os.path.sep + "cambio de lvl(provisional).wav")
+        self.sonido_recibir_damage_jugador = arcade.load_sound("Sonidos" + os.path.sep + "recibir daño.wav")
         # Atributos para manejar el mostrar mensajes dependiendo del buff y administrar los buffs en sí
         self.contador_quitar_mensaje = 0
         self.buffs_activos = []
@@ -126,23 +125,21 @@ class PhantomGear(arcade.Window):
         self.vida_jugador = 10
         self.carga_fantasmal_jugador = 100
         self.contador_quitar_mensaje = 600  # 10s
-
-        # Musica reset
-        self.musica_prision_activa = False
-        self.musica_ruinas_activa = False
-        self.musica_lab_activa = False
+        # Musica
+        self.contador_loop_musica = 18540  # 5,15 min (duracion musica)* 3600
 
         # Rooms
         self.cambiado = False
         self.rooms = Habitaciones.setup_habs()  # lista de todas las habitaciones
-        self.current_room = 68  # habitacion inicial (cambiar a 0)/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+        self.current_room = 1  # habitacion inicial (cambiar a 0)/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 
         # Fisicas para la habitacion en la que estemos
         self.physics_engine = arcade.PhysicsEngineSimple(self.jugador, self.rooms[self.current_room].wall_list)
         for enemigos in self.rooms[self.current_room].enemigos_list:
             self.physics_engine_enemigos = arcade.PhysicsEngineSimple(enemigos, self.rooms[self.current_room].wall_list)
-        for boss in self.rooms[self.current_room].boss_list:
-            self.physics_engine_boss = arcade.PhysicsEngineSimple(boss, self.rooms[self.current_room].wall_list)
+        if self.rooms[self.current_room].boss_list is not None:
+            for boss in self.rooms[self.current_room].boss_list:
+                self.physics_engine_boss = arcade.PhysicsEngineSimple(boss, self.rooms[self.current_room].wall_list)
 
         # Otros atributos
         self.controles_anulados_jugador = False
@@ -253,17 +250,22 @@ class PhantomGear(arcade.Window):
                 HUD.dibujar_pantalla_de_inicio()
 
     def on_update(self, delta_time: float = 1 / 60):
-        if not self.pausado or self.jugador.muerto:
+        if not self.pausado or self.jugador.muerto or not self.empezado:
             # Actualizar todos los sprites
             self.physics_engine.update()
             if len(self.rooms[self.current_room].enemigos_list) > 0:
                 self.physics_engine_enemigos.update()
-            if len(self.rooms[self.current_room].boss_list) > 0:
+            if self.rooms[self.current_room].boss_list is not None:
                 self.physics_engine_boss.update()
             self.jugador.update_animation()
             self.bullet_list.update()
             self.lista_balas_laser.update()
             self.lista_balas_gas.update()
+
+            # Musica
+            if not self.musica_activa:
+                self.musica.play()
+                self.musica_activa = True
 
             # Si estamos en modo fantasmal y matamos a todos los enemigos de la sala
             # --> reset de modo fantasmal (quitar buffs y demás)
@@ -305,13 +307,26 @@ class PhantomGear(arcade.Window):
                     for enemigos in self.rooms[self.current_room].enemigos_list:
                         self.physics_engine_enemigos = arcade.PhysicsEngineSimple(enemigos, self.rooms[
                             self.current_room].wall_list)
-                    for boss in self.rooms[self.current_room].boss_list:
-                        self.physics_engine_boss = arcade.PhysicsEngineSimple(boss, self.rooms[
-                            self.current_room].wall_list)
+                    if self.rooms[self.current_room].boss_list is not None:
+                        for boss in self.rooms[self.current_room].boss_list:
+                            self.physics_engine_boss = arcade.PhysicsEngineSimple(boss, self.rooms[
+                                self.current_room].wall_list)
                     self.bullet_list = arcade.SpriteList()
                     self.lista_balas_laser = arcade.SpriteList()
                     self.lista_balas_gas = arcade.SpriteList()
-                if self.current_room == 68:  # Pruebas , cambiar /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+            else:
+                # Límites para que el jugador no salga de la habitación mientras haya enemigos
+                if self.jugador.center_x < 125:
+                    self.jugador.center_x = 135
+                elif self.jugador.center_x > 775:
+                    self.jugador.center_x = 765
+                elif self.jugador.center_y > 775:
+                    self.jugador.center_y = 765
+                elif self.jugador.center_y < 125:
+                    self.jugador.center_y = 135
+
+            if self.rooms[self.current_room].boss_list is not None:
+                if self.current_room == 68 and len(self.rooms[self.current_room].boss_list) == 0:
                     self.controles_anulados_jugador = True
                     if self.jugador.ir_al_punto(450, 500):  # x, y
                         # Hemos llegado al punto
@@ -325,16 +340,6 @@ class PhantomGear(arcade.Window):
                             self.final_malo = True
                             self.jugador.muerto = True
                             self.controles_anulados_jugador = False
-            else:
-                # Límites para que el jugador no salga de la habitación mientras haya enemigos
-                if self.jugador.center_x < 125:
-                    self.jugador.center_x = 135
-                elif self.jugador.center_x > 775:
-                    self.jugador.center_x = 765
-                elif self.jugador.center_y > 775:
-                    self.jugador.center_y = 765
-                elif self.jugador.center_y < 125:
-                    self.jugador.center_y = 135
 
             # Limites para cuando el jugador cambia de piso o va a la sala del boss
             if self.current_room == 7 or self.current_room == 22 or self.current_room == 68:
@@ -375,20 +380,20 @@ class PhantomGear(arcade.Window):
                                 enemigo.remove_from_sprite_lists()
 
                     bala.remove_from_sprite_lists()
-                hit_list3 = arcade.check_for_collision_with_list(bala, self.rooms[self.current_room].boss_list)
-                if len(hit_list3) > 0 :
-                    for boss in self.rooms[self.current_room].boss_list:
-                        if boss in hit_list3:
-                            if self.buffs_activos[4]:
-                                boss.recibir_damage(2)
-                            else:
-                                boss.recibir_damage(1)
-                            # Muerte de enemigos
-                            if boss.vida <= 0:
-                                # Eliminamos al enemigo sin vida
-                                boss.remove_from_sprite_lists()
-
-                    bala.remove_from_sprite_lists()
+                if self.rooms[self.current_room].boss_list is not None:
+                    hit_list3 = arcade.check_for_collision_with_list(bala, self.rooms[self.current_room].boss_list)
+                    if len(hit_list3) > 0:
+                        for boss in self.rooms[self.current_room].boss_list:
+                            if boss in hit_list3:
+                                if self.buffs_activos[4]:
+                                    boss.recibir_damage(2)
+                                else:
+                                    boss.recibir_damage(1)
+                                # Muerte de enemigos
+                                if boss.vida <= 0:
+                                    # Eliminamos al enemigo sin vida
+                                    boss.remove_from_sprite_lists()
+                        bala.remove_from_sprite_lists()
 
             for laser in self.lista_balas_laser:
                 hit_list = arcade.check_for_collision_with_list(laser, self.rooms[self.current_room].wall_list)
@@ -398,6 +403,8 @@ class PhantomGear(arcade.Window):
                 if len(hit_list2) > 0:
                     laser.remove_from_sprite_lists()
                     self.vida_jugador -= 2
+                    if self.vida_jugador >= 1:
+                        self.sonido_recibir_damage_jugador.play()
 
             for gas in self.lista_balas_gas:
                 hit_list = arcade.check_for_collision_with_list(gas, self.rooms[self.current_room].wall_list)
@@ -407,12 +414,16 @@ class PhantomGear(arcade.Window):
                 if len(hit_list2) > 0:
                     gas.remove_from_sprite_lists()
                     self.vida_jugador -= 2
+                    if self.vida_jugador >= 1:
+                        self.sonido_recibir_damage_jugador.play()
 
             hit_list_enemigos = arcade.check_for_collision_with_list(self.jugador,
                                                                      self.rooms[self.current_room].enemigos_list)
 
             if len(hit_list_enemigos) > 0:
                 self.vida_jugador -= 0.25
+                if self.vida_jugador >= 1 and float(self.vida_jugador).is_integer():
+                    self.sonido_recibir_damage_jugador.play()
 
             for enemigos in self.rooms[self.current_room].enemigos_list:
                 enemigos.update_animation()
@@ -420,15 +431,17 @@ class PhantomGear(arcade.Window):
                 enemigos.atacar(enemigos, self.velocidad_disparo_enemigos, self.jugador, self.lista_balas_laser,
                                 self.lista_balas_gas)
 
-                enemigos.atacar(enemigos, self.velocidad_disparo_enemigos, self.jugador, self.lista_balas_laser, self.lista_balas_gas)
+                enemigos.atacar(enemigos, self.velocidad_disparo_enemigos, self.jugador, self.lista_balas_laser,
+                                self.lista_balas_gas)
                 """if self.jugador.center_x > enemigos.center_x:
                     enemigos.character_face_direction = RIGHT_FACING
                 else:
                     enemigos.character_face_direction = LEFT_FACING"""
-            for boss in self.rooms[self.current_room].boss_list:
-                boss.update_animation()
-                boss.movimiento(self.jugador, self.velocidad_boss)
-                boss.generar_enemigos(self.rooms[self.current_room].enemigos_list)
+            if self.rooms[self.current_room].boss_list is not None:
+                for boss in self.rooms[self.current_room].boss_list:
+                    boss.update_animation()
+                    boss.movimiento(self.jugador, self.velocidad_boss)
+                    boss.generar_enemigos(self.rooms[self.current_room].enemigos_list)
 
                 for enemigos in self.rooms[self.current_room].enemigos_list:
                     self.physics_engine_enemigos = arcade.PhysicsEngineSimple(enemigos,
@@ -466,15 +479,13 @@ class PhantomGear(arcade.Window):
                         if self.current_room == 67:  # hemos cogido el buff de daño doble
                             self.recogido_buff5 = True
                             self.buffs_activos[4] = True
+
             # Actualizar la música de fondo
-            if self.current_room <= 6 and not self.musica_prision_activa:
-                self.musica_prision_activa = True
-            elif 7 <= self.current_room <= 21 and not self.musica_ruinas_activa:
-                arcade.play_sound(self.musica_ruinas)
-                self.musica_ruinas_activa = True
-            elif 22 <= self.current_room <= 67 and not self.musica_lab_activa:
-                arcade.play_sound(self.musica_lab)
-                self.musica_lab_activa = True
+            if self.contador_loop_musica == 0:
+                self.musica.play()
+                self.contador_loop_musica = 18540  # reset del contador
+            else:
+                self.contador_loop_musica -= 1
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
@@ -490,7 +501,7 @@ class PhantomGear(arcade.Window):
                 return  # no necesitamos comprbar más controles
             if self.jugador.muerto:
                 # Reiniciar el juego desde el principio:
-                if key == arcade.key.R:  # Potencialmente puede dar problemas más adelante!!! REVISAR /\/\/\/\/\/\/\/\/\/\
+                if key == arcade.key.R:
                     self.setup()
                     self.jugador.muerto = False
                     self.jugador.estado_fantasmal = False  # por si morimos en modo fontasmal
@@ -524,9 +535,6 @@ class PhantomGear(arcade.Window):
             # Bloquear direccion a la que mira el personaje (hay que mantener)
             if key == arcade.key.SPACE:
                 self.jugador.bloquear_direccion()
-            # Hacerse daño a sí mismo (PROVISIONAL, PARA PRUEBAS)/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-            if key == arcade.key.Z:
-                self.vida_jugador -= 5
 
     def on_key_release(self, key, modifiers):
         """Called when the user releases a key. """
