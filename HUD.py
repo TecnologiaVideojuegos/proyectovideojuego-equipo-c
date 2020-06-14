@@ -110,9 +110,12 @@ def dibujar_hud_pausado(buffs):
             0, 450, arcade.color.GOLDEN_BROWN, 17, 450, align="center", bold=True)
 
 
-def dibujar_hud_gameover():
+def dibujar_hud_gameover(gameover_por_final_malo):
     arcade.draw_lrtb_rectangle_filled(0, 900, 900, 0, arcade.color.BLACK)
     arcade.draw_text("GAME OVER", 0, 450, arcade.color.RED_DEVIL, 36, 900, align="center", bold=True)
+    if gameover_por_final_malo:
+        arcade.draw_text("Necesitabas todas las piezas del artefacto!!", 0, 350, arcade.color.RED_DEVIL, 24, 900,
+                         align="center")
     arcade.draw_text("Pulsa R para reiniciar", 0, 250, arcade.color.RED_DEVIL, 24, 900, align="center")
     arcade.draw_text("(Puede tardar unos segundos)", 0, 150, arcade.color.RED_DEVIL, 24, 900, align="center")
 
@@ -154,3 +157,8 @@ def dibujar_partes_artefacto(buffs):
     if buffs[2]:
         jaula = arcade.load_texture("sprites_master" + os.path.sep + "PARTE2.png")
         arcade.draw_texture_rectangle(840, 840, 40, 50, jaula)
+
+
+def dibujar_pantalla_final():
+    arcade.draw_texture_rectangle(450, 450, 900, 900,
+                                  arcade.load_texture("sprites_master" + os.path.sep + "PANTALLAFINAL.jpg"))

@@ -172,6 +172,39 @@ class Jugador(arcade.Sprite):
     def morir(self):
         self.muerto = True
 
+    def ir_al_punto(self, punto_x, punto_y):
+        """" float, float --> boolean
+        Dadas unas coordenadas, el jugador va hacia las mismas y devuelve True si ha llegado
+        y False en caso contrario"""
+        velocidad_jugador_normal = 4  # velocidad del jugador predeterminada (sin buffs ni nada)
+        if punto_x-10 <= self.center_x <= punto_x+10 and punto_y-10 <= self.center_y <= punto_y+10:
+            # hemos llegado (aproximadamente)
+            # Paramos al jugador
+            self.change_x = 0
+            self.change_y = 0
+            return True
+        elif self.center_x < punto_x and self.center_y < punto_y:
+            self.change_x = velocidad_jugador_normal
+            self.change_y = velocidad_jugador_normal
+        elif self.center_x < punto_x and self.center_y > punto_y:
+            self.change_x = velocidad_jugador_normal
+            self.change_y = -velocidad_jugador_normal
+        elif self.center_x > punto_x and self.center_y < punto_y:
+            self.change_x = -velocidad_jugador_normal
+            self.change_y = velocidad_jugador_normal
+        elif self.center_x > punto_x and self.center_y > punto_y:
+            self.change_x = -velocidad_jugador_normal
+            self.change_y = -velocidad_jugador_normal
+        elif self.center_x < punto_x:
+            self.change_x = velocidad_jugador_normal
+        elif self.center_x > punto_x:
+            self.change_x = -velocidad_jugador_normal
+        elif self.center_y < punto_y:
+            self.change_y = velocidad_jugador_normal
+        elif self.center_y > punto_y:
+            self.change_y = -velocidad_jugador_normal
+        return False
+
     def update_animation(self, delta_time: float = 1 / 60):
         """Utilizado para actualizar la animación del jugador"""
         # Vemos adonde tenemos que mirar
