@@ -1,8 +1,12 @@
-# proyectovideojuego-equipo-c
-Integrantes:<p>
-           •	Alberto Rodríguez Blanco: Jefe de Equipo	<p>
-           •	Rodrigo Roca Román: Programador<p>
-           •	Pablo Victoria Fernández: Programador<p>
-           •	Tomás García Sánchez: Diseñador Gráfico<p>
-           •	Alejandro Grueso Laso Música y efectos de sonido <p>
 
+# Repositorio de Phantom Gear
+## 
+### Videojuego de Tecnología de Videojuegos del Equipo C
+
+### Integrantes
+- Alberto Rodríguez Blanco : Jefe de Equipo
+- Fernando Parra Romero: Programador
+- Fernando Parra Romero: Programador
+- Diego Plaza Calvo: Diseñador Gráfico 
+- Alejandro Cedillo Aladid: Música y efectos de sonido
+## [Pagina Web Del Videojuego](https://albrb9.github.io/Phanton-Gear-Web/)
