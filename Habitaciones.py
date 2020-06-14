@@ -1,6 +1,7 @@
 import arcade
 import os
 import Enemigos
+import Boss
 
 SCREEN_WIDTH = 900
 SCREEN_HEIGHT = 900
@@ -20,6 +21,7 @@ class Room:
         self.balas_list = None
         self.recargas_list = None
         self.buffs_list = None
+        self.boss_list = None
 
 
 def setup_room_p1():
@@ -31,6 +33,7 @@ def setup_room_p1():
     room.enemigos_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
     room.buffs_list = arcade.SpriteList()
+    room.boss_list = arcade.SpriteList()
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "PRISION6.tmx")
@@ -42,6 +45,12 @@ def setup_room_p1():
     buff.center_x = 750
     buff.center_y = 450
     room.buffs_list.append(buff)
+
+    #boss
+    boss = Boss.boss()
+    boss.center_x=400
+    boss.center_y=600
+    room.boss_list.append(boss)
 
     # Definir muros
     room.wall_list = obstaculos
@@ -2031,6 +2040,7 @@ def setup_room_lboss():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+    room.boss_list = arcade.SpriteList()
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LABSALAFINAL.tmx")

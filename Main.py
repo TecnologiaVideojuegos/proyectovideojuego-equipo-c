@@ -4,6 +4,7 @@ import os
 import HUD
 import random
 import Habitaciones
+import Boss
 
 # --- Constantes ---
 
@@ -23,6 +24,8 @@ class PhantomGear(arcade.Window):
         self.lista_balas_laser = None
         self.lista_balas_gas = None
         self.dama_list = None
+        self.boss_list = None
+        self.lista_balas_boss = None
         # Habitaciones
         self.current_room = 0
         self.rooms = None
@@ -30,8 +33,6 @@ class PhantomGear(arcade.Window):
         self.cambiado_piso = False
         # Set up the player
         self.jugador = None
-        self.physics_engine = None
-        self.physics_engine_enemigos = None
         self.velocidad_jugador = 4
         self.vida_jugador = 10
         self.carga_fantasmal_jugador = 100
@@ -46,11 +47,18 @@ class PhantomGear(arcade.Window):
         self.contador_espera_transformar_dama = 0
         self.contador_espera_pantalla_final = 0
         self.final_malo = False
+        # Motores físicas
+        self.physics_engine = None
+        self.physics_engine_enemigos = None
+        self.physics_engine_boss = None
         # Atributos para el disparo del jugador
         self.velocidad_disparo = 10
         # Atributos enemigos
         self.velocidad_enemigos = 1.2
         self.velocidad_disparo_enemigos = 5
+        # Atributos Boss
+        self.velocidad_boss = 0.75
+        self.velocidad_disparo_boss = 5
         # Atributos para el manejo del comienzo del juego
         self.empezado = False
         self.mirando_controles = False
@@ -84,6 +92,7 @@ class PhantomGear(arcade.Window):
         self.lista_balas_laser = arcade.SpriteList()
         self.lista_balas_gas = arcade.SpriteList()
         self.dama_list = arcade.SpriteList()
+        self.lista_balas_boss = arcade.SpriteList()
         # Create the player
         self.jugador = Jugador.Jugador()  # OJO!
         self.jugador.center_x = 350
@@ -132,6 +141,8 @@ class PhantomGear(arcade.Window):
         self.physics_engine = arcade.PhysicsEngineSimple(self.jugador, self.rooms[self.current_room].wall_list)
         for enemigos in self.rooms[self.current_room].enemigos_list:
             self.physics_engine_enemigos = arcade.PhysicsEngineSimple(enemigos, self.rooms[self.current_room].wall_list)
+        for boss in self.rooms[self.current_room].boss_list:
+            self.physics_engine_boss = arcade.PhysicsEngineSimple(boss, self.rooms[self.current_room].wall_list)
 
         # Otros atributos
         self.controles_anulados_jugador = False
@@ -201,6 +212,7 @@ class PhantomGear(arcade.Window):
                     self.rooms[self.current_room].buffs_list.draw()
                 HUD.dibujar_partes_artefacto(self.buffs_activos)
                 self.rooms[self.current_room].enemigos_list.draw()
+                self.rooms[self.current_room].boss_list.draw()
                 self.rooms[self.current_room].balas_list.draw()
                 if self.current_room == 68:
                     # Ponemos a la dama observando
@@ -246,6 +258,8 @@ class PhantomGear(arcade.Window):
             self.physics_engine.update()
             if len(self.rooms[self.current_room].enemigos_list) > 0:
                 self.physics_engine_enemigos.update()
+            if len(self.rooms[self.current_room].boss_list) > 0:
+                self.physics_engine_boss.update()
             self.jugador.update_animation()
             self.bullet_list.update()
             self.lista_balas_laser.update()
@@ -290,6 +304,9 @@ class PhantomGear(arcade.Window):
                         self.sonido_cambio_piso.play()
                     for enemigos in self.rooms[self.current_room].enemigos_list:
                         self.physics_engine_enemigos = arcade.PhysicsEngineSimple(enemigos, self.rooms[
+                            self.current_room].wall_list)
+                    for boss in self.rooms[self.current_room].boss_list:
+                        self.physics_engine_boss = arcade.PhysicsEngineSimple(boss, self.rooms[
                             self.current_room].wall_list)
                     self.bullet_list = arcade.SpriteList()
                     self.lista_balas_laser = arcade.SpriteList()
@@ -358,6 +375,21 @@ class PhantomGear(arcade.Window):
                                 enemigo.remove_from_sprite_lists()
 
                     bala.remove_from_sprite_lists()
+                hit_list3 = arcade.check_for_collision_with_list(bala, self.rooms[self.current_room].boss_list)
+                if len(hit_list3) > 0 :
+                    for boss in self.rooms[self.current_room].boss_list:
+                        if boss in hit_list3:
+                            if self.buffs_activos[4]:
+                                boss.recibir_damage(2)
+                            else:
+                                boss.recibir_damage(1)
+                            # Muerte de enemigos
+                            if boss.vida <= 0:
+                                # Eliminamos al enemigo sin vida
+                                boss.remove_from_sprite_lists()
+
+                    bala.remove_from_sprite_lists()
+
             for laser in self.lista_balas_laser:
                 hit_list = arcade.check_for_collision_with_list(laser, self.rooms[self.current_room].wall_list)
                 if len(hit_list) > 0:
@@ -387,6 +419,24 @@ class PhantomGear(arcade.Window):
                 enemigos.follow_sprite(self.jugador, self.velocidad_enemigos)
                 enemigos.atacar(enemigos, self.velocidad_disparo_enemigos, self.jugador, self.lista_balas_laser,
                                 self.lista_balas_gas)
+
+                enemigos.atacar(enemigos, self.velocidad_disparo_enemigos, self.jugador, self.lista_balas_laser, self.lista_balas_gas)
+                """if self.jugador.center_x > enemigos.center_x:
+                    enemigos.character_face_direction = RIGHT_FACING
+                else:
+                    enemigos.character_face_direction = LEFT_FACING"""
+            for boss in self.rooms[self.current_room].boss_list:
+                boss.update_animation()
+                boss.movimiento(self.jugador, self.velocidad_boss)
+                boss.generar_enemigos(self.rooms[self.current_room].enemigos_list)
+
+                for enemigos in self.rooms[self.current_room].enemigos_list:
+                    self.physics_engine_enemigos = arcade.PhysicsEngineSimple(enemigos,
+                                                                              self.rooms[self.current_room].wall_list)
+                    enemigos.update_animation()
+                    enemigos.follow_sprite(self.jugador, self.velocidad_enemigos)
+                    enemigos.atacar(enemigos, self.velocidad_disparo_enemigos, self.jugador, self.lista_balas_laser,
+                                    self.lista_balas_gas)
 
             # Mirar si hemos cogido alguna recarga
             hit_list3 = arcade.check_for_collision_with_list(self.jugador, self.rooms[self.current_room].recargas_list)
