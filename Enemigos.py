@@ -1,6 +1,8 @@
 import arcade
 import os
 import math
+import Main
+import Jugador
 import random
 
 RIGHT_FACING = 0
@@ -163,7 +165,7 @@ class Skeleton(arcade.Sprite):
     def atacar(self, skeleton, velocidad_disparo_enemigos, jugador, lista_balas_laser, lista_balas_gas):
         self.change_y = 0
         self.change_x = 0
-        if random.randrange(100) == 1:
+        if random.randrange(70) == 1:
             laser = arcade.Sprite("sprites_master" + os.path.sep + "LASER.png")
             self.sonido_laser.play()
 
@@ -304,7 +306,7 @@ class Gasmasked(arcade.Sprite):
     def atacar(self, gasmasked, velocidad_disparo_enemigos, jugador, lista_balas_laser, lista_balas_gas):
         self.change_y = 0
         self.change_x = 0
-        if random.randrange(50) == 1:
+        if random.randrange(20) == 1:
             proyectil_gaseoso = arcade.Sprite("sprites_master" + os.path.sep + "GASATTACK.png")
             self.sonido_disparar.play()
             if self.character_face_direction == RIGHT_FACING:

@@ -4,6 +4,7 @@ import os
 import HUD
 import random
 import Habitaciones
+import Boss
 
 # --- Constantes ---
 
@@ -130,7 +131,7 @@ class PhantomGear(arcade.Window):
         # Rooms
         self.cambiado = False
         self.rooms = Habitaciones.setup_habs()  # lista de todas las habitaciones
-        self.current_room = 0  # habitacion inicial
+        self.current_room = 1  # habitacion inicial (cambiar a 0)/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 
         # Fisicas para la habitacion en la que estemos
         self.physics_engine = arcade.PhysicsEngineSimple(self.jugador, self.rooms[self.current_room].wall_list)
@@ -271,15 +272,9 @@ class PhantomGear(arcade.Window):
 
             # Si estamos en modo fantasmal y matamos a todos los enemigos de la sala
             # --> reset de modo fantasmal (quitar buffs y demás)
-            if len(self.rooms[self.current_room].enemigos_list) == 0 and self.jugador.estado_fantasmal:
-                if self.rooms[self.current_room].boss_list is not None:
-                    if len(self.rooms[self.current_room].boss_list) == 0:
-                        self.vida_jugador = 10
-                        self.jugador.desactivar_modo_fantasmal()
-                        # Quitamos los buffs
-                        if self.buffs_activos[1]:  # si tenemos el buff de velocidad activo
-                            self.velocidad_jugador /= 1.5
-                else:
+            if len(self.rooms[self.current_room].enemigos_list) == 0 and self.jugador.estado_fantasmal and self.rooms[
+                self.current_room].boss_list is not None:
+                if len(self.rooms[self.current_room].boss_list) == 0:
                     self.vida_jugador = 10
                     self.jugador.desactivar_modo_fantasmal()
                     # Quitamos los buffs
@@ -293,7 +288,7 @@ class PhantomGear(arcade.Window):
                 self.jugador.morir()
                 return
             # Activar modo fantsamal (si podemos)
-            if self.vida_jugador <= 0 and not self.jugador.estado_fantasmal:
+            if self.vida_jugador == 0 and not self.jugador.estado_fantasmal:
                 if self.carga_fantasmal_jugador >= 100:  # Aplicamos buffs modo fant.
                     self.jugador.activar_modo_fantasmal()
                     self.carga_fantasmal_jugador -= 100
@@ -462,6 +457,10 @@ class PhantomGear(arcade.Window):
 
                 enemigos.atacar(enemigos, self.velocidad_disparo_enemigos, self.jugador, self.lista_balas_laser,
                                 self.lista_balas_gas)
+                """if self.jugador.center_x > enemigos.center_x:
+                    enemigos.character_face_direction = RIGHT_FACING
+                else:
+                    enemigos.character_face_direction = LEFT_FACING"""
             if self.rooms[self.current_room].boss_list is not None:
                 for boss in self.rooms[self.current_room].boss_list:
                     boss.update_animation()

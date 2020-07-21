@@ -46,6 +46,12 @@ def setup_room_p1():
     buff.center_y = 450
     room.buffs_list.append(buff)
 
+    #boss
+    boss = Boss.boss()
+    boss.center_x=400
+    boss.center_y=600
+    room.boss_list.append(boss)
+
     # Definir muros
     room.wall_list = obstaculos
     return room
@@ -62,7 +68,7 @@ def setup_room_p2():
     room.recargas_list = arcade.SpriteList()
 
     # Enemigos
-    masked = Enemigos.Masked()
+    masked= Enemigos.Masked()
     masked.center_y = 450
     masked.center_x = 800
     room.enemigos_list.append(masked)
@@ -208,7 +214,7 @@ def setup_room_p7():
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "PRISION1.tmx")
-    obstaculos = arcade.process_layer(mapa_hab2, "ROCAS Y CAJAS")
+    obstaculos = arcade.process_layer(mapa_hab2, "ROCAS Y CAJAS")  # OJO!
     room.background = arcade.load_texture("sprites_master" + os.path.sep + "PRISION1.png")
 
     # Buffs
@@ -2044,9 +2050,9 @@ def setup_room_lboss():
     # Definir muros
     room.wall_list = obstaculos
 
-    # Boss
+    #Boss
     boss = Boss.boss()
-    boss.center_x = 450
+    boss.center_x= 450
     boss.center_y = 450
     room.boss_list.append(boss)
 

@@ -1,6 +1,7 @@
 import arcade
 import Enemigos
 import os
+import Main
 import random
 import math
 
@@ -92,6 +93,7 @@ class boss(arcade.Sprite):
             self.change_y = math.sin(angle) * velocidad_enemigos
 
     def update_animation(self, delta_time: float = 1 / 60):
+
         # Saber si hay que mirar hacia la derecha, izquierda, arriba o abajo.
         if self.change_x < 0 and (self.character_face_direction == RIGHT_FACING or UP_FACING or DOWN_FACING):
             self.character_face_direction = LEFT_FACING
@@ -110,6 +112,18 @@ class boss(arcade.Sprite):
         if self.cur_texture >= NUM_TEXTURAS_ANDAR * UPDATES_PER_FRAME:
             self.cur_texture = 0
         self.texture = self.textura_andar[self.cur_texture // UPDATES_PER_FRAME][self.character_face_direction]
+        """diff_x = abs(jugador.center_x - boss.center_x)
+        diff_y = abs(jugador.center_y - boss.center_y)
+        if diff_x > diff_y :
+            if jugador.center_x > boss.center_x:
+                self.character_face_direction = RIGHT_FACING
+            else:
+                self.character_face_direction = LEFT_FACING
+        else:
+            if jugador.center_y > boss.center_y:
+                self.character_face_direction = UP_FACING
+            else:
+                self.character_face_direction = DOWN_FACING"""
 
     def generar_enemigos(self, lista_enemigos):
         if random.randrange(1000) == 1:
